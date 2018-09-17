@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AIrMusic" parent="AppTheme" />
+
+    <style name="AIrMusic" parent="Theme.AppCompat.Light.NoActionBar" />
+
 </resources>
