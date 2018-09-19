@@ -1,23 +1,19 @@
 package com.example.es1294.airmusic;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class feed extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
-
-
+        setContentView(R.layout.activity_feed);
 
     }
 
@@ -33,17 +29,17 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.profile){
-            Intent intent = new Intent(MainActivity.this, profile.class);
+            Intent intent = new Intent(feed.this, profile.class);
             startActivity(intent);
             return false;
         }
         else if (id == R.id.feed){
-            Intent intent = new Intent(MainActivity.this, feed.class);
+            Intent intent = new Intent(feed.this, feed.class);
             startActivity(intent);
             return false;
         }
         else if(id == R.id.help){
-            Intent intent = new Intent(MainActivity.this, help.class);
+            Intent intent = new Intent(feed.this, help.class);
             startActivity(intent);
             return false;
         }
