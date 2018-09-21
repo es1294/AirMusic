@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_redd">
     tools:context="com.example.es1294.airmusic.help">
 
     <TextView
@@ -17,7 +18,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="#9a2741"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:text="HELP Page"
@@ -31,12 +32,17 @@
         android:id="@+id/textView2"
         android:layout_width="370dp"
         android:layout_height="404dp"
-        android:layout_alignParentBottom="true"
-
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="27dp"
+        android:textColor="#C0C0C0"
+        android:layout_centerVertical="true"
         android:fontFamily="sans-serif-black"
-        android:text="> Tap the menu button located on the top right corner to change pages.
+        android:text="> Tap the menu button located on the top right corner to change pages. \n \n
+    > How the app works you ask? -\n
+
+    \n >Feed Page - Share your songs with your friends with a tap of a button, so you can listen to it at the same time! \n
+
+    \n >Profile Page - Setup your unique profile so you can show your friends what music you listen to!\n
+
+    \n >Music Page - See who is listening to your favorite songs with you!
 "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
