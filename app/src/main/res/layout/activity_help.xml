@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_redd">
     tools:context="com.example.es1294.airmusic.help">
 
     <TextView
-        android:id="@+id/help_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Help Page"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="32dp" />
-</android.support.constraint.ConstraintLayout>
+        android:id="@+id/heading"
+        android:layout_width="239dp"
+        android:layout_height="58dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#9a2741"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="HELP Page"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="370dp"
+        android:layout_height="404dp"
+        android:textColor="#C0C0C0"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif-black"
+        android:text="> Tap the menu button (three dots) located on the top right corner to change pages. \n \n
+    > How the app works you ask? -\n
+
+    \n >Feed Page - Share your songs with your friends with a tap of a button, so you can listen to it at the same time! \n
+
+    \n >Profile Page - Setup your unique profile so you can show your friends what music you listen to!\n
+
+    \n >Music Page - See who is listening to your favorite songs with you! \n
+
+    \n >To go back to the Home page, tap the android symbol on the top right.
+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</RelativeLayout>

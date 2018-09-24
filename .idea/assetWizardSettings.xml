@@ -62,9 +62,15 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="000000" />
+ help_page
+                                      <entry key="backgroundLayerName" value="ic_launcher_background_logo" />
+                                      <entry key="foregroundImage" value="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/airlogo.png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_foreground_logoWords" />
+
                                       <entry key="backgroundLayerName" value="ic_launcher_background_cloud" />
                                       <entry key="foregroundImage" value="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Android Studio" />
                                       <entry key="foregroundLayerName" value="ic_launcher_" />
+ master
                                       <entry key="legacyIconShape" value="CIRCLE" />
                                       <entry key="outputName" value="image_failed" />
                                       <entry key="previewDensity" value="MEDIUM" />
