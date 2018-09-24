@@ -35,14 +35,16 @@
         android:textColor="#C0C0C0"
         android:layout_centerVertical="true"
         android:fontFamily="sans-serif-black"
-        android:text="> Tap the menu button located on the top right corner to change pages. \n \n
+        android:text="> Tap the menu button (three dots) located on the top right corner to change pages. \n \n
     > How the app works you ask? -\n
 
     \n >Feed Page - Share your songs with your friends with a tap of a button, so you can listen to it at the same time! \n
 
     \n >Profile Page - Setup your unique profile so you can show your friends what music you listen to!\n
 
-    \n >Music Page - See who is listening to your favorite songs with you!
+    \n >Music Page - See who is listening to your favorite songs with you! \n
+
+    \n >To go back to the Home page, tap the android symbol on the top right.
 "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
