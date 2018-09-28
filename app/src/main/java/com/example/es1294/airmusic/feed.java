@@ -81,6 +81,11 @@ public class feed extends AppCompatActivity {
             startActivity(intent);
             return false;
         }
+        else if (id == R.id.drop_menu){
+            Intent intent = new Intent(feed.this , MainActivity.class );
+            startActivity(intent);
+            return false;
+        }
         else if(id == R.id.help){
             Intent intent = new Intent(feed.this, help.class);
             startActivity(intent);
