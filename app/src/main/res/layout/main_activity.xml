@@ -28,14 +28,17 @@
                 android:id="@+id/elapsed_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
                 android:text="0:15"
-                android:layout_marginLeft="45dp"/>
+                android:textColor="#C0C0C0" />
+
             <TextView
                 android:id="@+id/remaining_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="240dp"
                 android:text="-1:50"
-                android:layout_marginLeft="240dp"/>
+                android:textColor="#C0C0C0" />
         </LinearLayout>
 
     <Button

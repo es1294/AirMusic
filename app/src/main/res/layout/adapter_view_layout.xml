@@ -19,14 +19,15 @@
             android:id="@+id/image"/>
 
         <TextView
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:text="TextView1"
+            android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:id="@+id/textView1"
-            android:layout_weight="50"/>
+            android:layout_weight="50"
+            android:gravity="center"
+            android:text="TextView1"
+            android:textAlignment="center"
+            android:textColor="#C0C0C0"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -36,22 +37,24 @@
         android:orientation="vertical"
         android:layout_weight="33.3"
         >
+
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"
             android:text="@string/textview2"
-            android:id="@+id/textView2"
-            />
+            android:textColor="#C0C0C0" />
+
         <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_below="@+id/textView2"
             android:gravity="center"
             android:text="@string/textview3"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/textView2"
 
-            />
+            android:textColor="#C0C0C0" />
     </LinearLayout>
 
 </LinearLayout>
