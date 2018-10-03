@@ -20,7 +20,7 @@ android:layout_height="match_parent">
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText2"
+        android:layout_above="@+id/password_editText"
         android:layout_centerHorizontal="true"
         android:drawableLeft="@drawable/ic_action_user"
         android:ems="10"
@@ -28,7 +28,7 @@ android:layout_height="match_parent">
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/password_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -52,7 +52,7 @@ android:layout_height="match_parent">
         android:id="@+id/button"
         android:layout_width="141dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/password_editText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-196dp"
         android:text="Login" />
