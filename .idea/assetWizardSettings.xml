@@ -18,12 +18,23 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="clipArt">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="15" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="clipartAsset">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_donut_large_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_lock_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,7 +44,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_action_image_failed" />
+                                      <entry key="outputName" value="ic_action_pass" />
+                                      <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -62,15 +74,9 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="000000" />
- help_page
-                                      <entry key="backgroundLayerName" value="ic_launcher_background_logo" />
-                                      <entry key="foregroundImage" value="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/airlogo.png" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground_logoWords" />
-
                                       <entry key="backgroundLayerName" value="ic_launcher_background_cloud" />
-                                      <entry key="foregroundImage" value="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Android Studio" />
+                                      <entry key="foregroundImage" value="$APPLICATION_HOME_DIR$/bin/C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Android Studio" />
                                       <entry key="foregroundLayerName" value="ic_launcher_" />
- master
                                       <entry key="legacyIconShape" value="CIRCLE" />
                                       <entry key="outputName" value="image_failed" />
                                       <entry key="previewDensity" value="MEDIUM" />
