@@ -3,6 +3,8 @@ package com.example.es1294.airmusic;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -46,17 +48,18 @@ public class musicPlayer extends AppCompatActivity {
         mediaPlayer.setVolume(0.5f , 0.5f);
         total_time = mediaPlayer.getDuration();
 
+        //implements seong progress seekbar
         //instantiates the variable song_progress to the seekbar in the MainActivity.xml
 
         song_progress = (SeekBar) findViewById(R.id.song_progress);
         song_progress.setMax(total_time);
-
-        volume_control = (SeekBar) findViewById(R.id.volume_control);
-        volume_control.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        song_progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                float volumeStatus = progress /100f;
-                mediaPlayer.setVolume(progress, progress);
+                if(fromUser){
+                    mediaPlayer.seekTo(progress);
+                    song_progress.setProgress(progress);
+                }
             }
 
             @Override
@@ -69,6 +72,82 @@ public class musicPlayer extends AppCompatActivity {
 
             }
         });
+
+        //Volume Bar
+
+        volume_control = (SeekBar) findViewById(R.id.volume_control);
+
+        //changes volumes on volume seekbar
+
+        volume_control.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                float volumeNumber = progress /100f;
+                mediaPlayer.setVolume(volumeNumber, volumeNumber);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        //Thread to update position bar & time labels
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while(mediaPlayer!= null){
+                    try{
+                        Message msg = new Message();
+                        msg.what = mediaPlayer.getCurrentPosition();
+                        handler.sendMessage(msg);
+
+                        Thread.sleep(1000);
+                    }catch (InterruptedException e){}
+                }
+            }
+        }).start();
+    }
+
+    private Handler handler = new Handler(){
+        public void handleMessage( Message msg){
+            int currentPosition = msg.what;
+
+            //update position bar
+
+            song_progress.setProgress(currentPosition);
+
+            //update labels
+
+            String elapsedTime = createTimeLabel(currentPosition);
+            elapsed_time.setText(elapsedTime);
+
+            String remainingTime = createTimeLabel(total_time - currentPosition);
+            remaining_time.setText("- " +remainingTime);
+        }
+    };
+
+    //creates timelabels to display on song
+    public String createTimeLabel(int time){
+        String timeLabel ="";
+        int minute = time /1000 /60;
+        int seconds = time / 1000 % 60;
+
+        timeLabel = minute + ":";
+
+        if(seconds < 10){
+            timeLabel += "0";
+        }
+        timeLabel += seconds;
+
+        return timeLabel;
     }
 
     public void playButtonClick(View view){
