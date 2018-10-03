@@ -37,7 +37,7 @@ public class help extends AppCompatActivity {
             return false;
         }
         else if (id == R.id.drop_menu){
-            Intent intent = new Intent(help.this , MainActivity.class );
+            Intent intent = new Intent(help.this , musicPlayer.class );
             startActivity(intent);
             return false;
         }

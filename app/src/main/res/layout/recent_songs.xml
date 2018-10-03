@@ -21,5 +21,6 @@
         android:layout_width="65dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="#C0C0C0" />
 </LinearLayout>
