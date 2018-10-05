@@ -132,5 +132,14 @@
         android:textColor="#C0C0C0"
         android:textSize="20dp" />
 
+    <Button
+        android:id="@+id/profileEditButton"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:text="Edit Profile"
+        android:textSize="10dp"/>
+
 
 </RelativeLayout>

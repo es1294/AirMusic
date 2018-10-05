@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".profile" />
         <activity android:name=".feed" />
-        <activity android:name=".help"></activity>
+        <activity android:name=".help" />
+        <activity android:name=".edit_profile"></activity>
     </application>
 
 </manifest>
