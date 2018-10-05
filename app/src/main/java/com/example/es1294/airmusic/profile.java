@@ -75,7 +75,7 @@ public class profile extends AppCompatActivity {
             return false;
         }
         else if (id == R.id.drop_menu){
-            Intent intent = new Intent(profile.this , MainActivity.class );
+            Intent intent = new Intent(profile.this , musicPlayer.class );
             startActivity(intent);
             return false;
         }
