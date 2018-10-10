@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".profile" />
         <activity android:name=".feed" />
-        <activity android:name=".musicPlayer" />
+        <activity android:name=".edit_profile"/>
+        <activity android:name=".musicPlayer"/>
         <activity android:name=".help"></activity>
     </application>
 

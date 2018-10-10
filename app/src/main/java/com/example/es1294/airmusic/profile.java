@@ -8,16 +8,28 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class profile extends AppCompatActivity {
 
+    private Button profileEditButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        profileEditButton = (Button) findViewById(R.id.profileEditButton);
+        profileEditButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                openProfileEditActivity();
+            }
+        });
 
         LinearLayout recentSongs = findViewById(R.id.recentSongs);
 
@@ -34,6 +46,11 @@ public class profile extends AppCompatActivity {
 
             recentSongs.addView(view);
         }
+    }
+
+    public void openProfileEditActivity(){
+        Intent intent = new Intent(this, edit_profile.class);
+        startActivity(intent);
     }
 
     @Override
