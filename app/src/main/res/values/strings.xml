@@ -1,14 +1,8 @@
 <resources>
     <string name="app_name">AirMusic</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="feed">Feed</string>
-    <string name="music">Music</string>
     <string name="help">Help</string>
     <string name="profile">Profile</string>
-    <string name="welcome_user">Welcome User!</string>
-    <string name="textview1">TextView1</string>
     <string name="textview2">TextView2</string>
     <string name="textview3">TextView3</string>
 </resources>

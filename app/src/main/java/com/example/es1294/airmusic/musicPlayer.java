@@ -19,6 +19,8 @@ import android.widget.Toolbar;
 
 public class musicPlayer extends AppCompatActivity {
 
+
+    int resID;              //id of song that was clicked in ListOfSongs class
     Button play_button;     // button on music screen to play the current song
     SeekBar song_progress;  //seekbar that allows user to fast foward or rewind
     SeekBar volume_control; //seekbar that allows user to set the volume
@@ -32,6 +34,9 @@ public class musicPlayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music_player_activity);
 
+        Intent intent = getIntent();
+        resID = intent.getIntExtra(ListOfSongs.EXTRA_ID, 0);
+
         //instantiating the variables to the contents in the drawable files
 
         play_button = (Button)findViewById(R.id.play_button);
@@ -42,7 +47,7 @@ public class musicPlayer extends AppCompatActivity {
         //sets the volume to half
         //and gets the duration of the song
 
-        mediaPlayer = mediaPlayer.create(this, R.raw.blue_dream);
+        mediaPlayer = mediaPlayer.create(this,resID);
         mediaPlayer.setLooping(true);
         mediaPlayer.seekTo(0);
         mediaPlayer.setVolume(0.5f , 0.5f);
@@ -150,6 +155,9 @@ public class musicPlayer extends AppCompatActivity {
         return timeLabel;
     }
 
+    //when in music activity pressing play plays song.
+    //then sets background of button to pause
+
     public void playButtonClick(View view){
         if(!mediaPlayer.isPlaying()){
             mediaPlayer.start();
@@ -161,6 +169,8 @@ public class musicPlayer extends AppCompatActivity {
         }
     }
 
+    //for all classes in menu, this makes the dropdown menu available
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -168,29 +178,35 @@ public class musicPlayer extends AppCompatActivity {
         return true;
     }
 
+    //depending on which item was clicked in the menu, go to that activity and start it
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if(id == R.id.profile){
-            Intent intent = new Intent(musicPlayer.this, profile.class);
+            Intent intent = new Intent(this, profile.class);
             startActivity(intent);
             return false;
         }
         else if (id == R.id.drop_menu){
-            Intent intent = new Intent(musicPlayer.this , musicPlayer.class );
+            Intent intent = new Intent(this , musicPlayer.class );
             startActivity(intent);
             return false;
         }
         else if (id == R.id.feed){
-            Intent intent = new Intent(musicPlayer.this, feed.class);
+            Intent intent = new Intent(this, feed.class);
             startActivity(intent);
             return false;
         }
         else if(id == R.id.help){
-            Intent intent = new Intent(musicPlayer.this, help.class);
+            Intent intent = new Intent(this, help.class);
             startActivity(intent);
             return false;
+        }
+        else if(id == R.id.song_list){
+            Intent intent= new Intent(this, ListOfSongs.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

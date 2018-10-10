@@ -72,24 +72,28 @@ public class feed extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.profile){
-            Intent intent = new Intent(feed.this, profile.class);
-            startActivity(intent);
-            return false;
-        }
-        else if (id == R.id.feed){
-            Intent intent = new Intent(feed.this, feed.class);
+            Intent intent = new Intent(this, profile.class);
             startActivity(intent);
             return false;
         }
         else if (id == R.id.drop_menu){
-            Intent intent = new Intent(feed.this , musicPlayer.class );
+            Intent intent = new Intent(this , musicPlayer.class );
+            startActivity(intent);
+            return false;
+        }
+        else if (id == R.id.feed){
+            Intent intent = new Intent(this, feed.class);
             startActivity(intent);
             return false;
         }
         else if(id == R.id.help){
-            Intent intent = new Intent(feed.this, help.class);
+            Intent intent = new Intent(this, help.class);
             startActivity(intent);
             return false;
+        }
+        else if(id == R.id.song_list){
+            Intent intent= new Intent(this, ListOfSongs.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
