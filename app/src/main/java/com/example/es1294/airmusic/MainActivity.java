@@ -17,7 +17,7 @@ import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button login;     // button on music screen to play the current song
+    Button login;     // button to log in
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

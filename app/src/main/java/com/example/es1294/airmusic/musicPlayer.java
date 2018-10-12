@@ -190,7 +190,8 @@ public class musicPlayer extends AppCompatActivity {
             return false;
         }
         else if (id == R.id.drop_menu){
-            Intent intent = new Intent(this , musicPlayer.class );
+           // Intent intent = new Intent(this , musicPlayer.class );
+            Intent intent = getIntent();
             startActivity(intent);
             return false;
         }
