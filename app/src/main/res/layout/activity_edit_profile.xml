@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/app_background2"
+    android:layout_height="match_parent"
+    tools:context=".edit_profile">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/editProfileNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name:"
+                android:textColor="#C0C0C0"
+                android:textSize="20dp"
+                tools:layout_editor_absoluteX="51dp"
+                tools:layout_editor_absoluteY="96dp" />
+
+            <EditText
+                android:id="@+id/profileNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter your name"
+                android:inputType="textPersonName"
+                android:textColorHint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:backgroundTint="#C0C0C0"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <TextView
+                android:id="@+id/editProfileAboutLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About me:"
+                android:textColor="#C0C0C0"
+                android:textSize="20dp"
+                tools:layout_editor_absoluteX="51dp"
+                tools:layout_editor_absoluteY="96dp" />
+
+            <EditText
+                android:id="@+id/editProfileAboutMe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="3"
+                android:hint="Write about yourself here..."
+                android:textColorHint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:backgroundTint="#C0C0C0"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:id="@+id/editProfileArtistInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favorite Artists:"
+                android:textColor="#C0C0C0"
+                android:textSize="20dp"
+                tools:layout_editor_absoluteX="51dp"
+                tools:layout_editor_absoluteY="96dp" />
+
+            <EditText
+                android:id="@+id/editProfileArtist1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Enter an artist"
+                android:textColorHint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:backgroundTint="#C0C0C0"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <EditText
+                android:id="@+id/editProfileArtist2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:backgroundTint="#C0C0C0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Enter an artist"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <EditText
+                android:id="@+id/editProfileArtist3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Enter an artist"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <EditText
+                android:id="@+id/editProfileArtist4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Enter an artist"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <EditText
+                android:id="@+id/editProfileArtist5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Enter an artist"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <TextView
+                android:id="@+id/editProfileGenreInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Favorite Genres:"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
+                android:textSize="20dp"
+                tools:layout_editor_absoluteX="51dp"
+                tools:layout_editor_absoluteY="96dp" />
+
+            <EditText
+                android:id="@+id/editProfileGenre1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Enter a genre"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <EditText
+                android:id="@+id/editProfileGenre2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Enter a genre"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <EditText
+                android:id="@+id/editProfileGenre3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#C0C0C0"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Enter a genre"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <Button
+                android:id="@+id/editProfilePhotoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change Profile Photo" />
+
+            <ImageView
+                android:id="@+id/editProfilePhoto"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/default_profile_pic_png_9" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/saveChangesToProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="Save Changes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+</android.support.constraint.ConstraintLayout>

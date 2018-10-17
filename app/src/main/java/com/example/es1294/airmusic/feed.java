@@ -82,7 +82,7 @@ public class feed extends AppCompatActivity {
             return false;
         }
         else if (id == R.id.drop_menu){
-            Intent intent = new Intent(feed.this , MainActivity.class );
+            Intent intent = new Intent(feed.this , musicPlayer.class );
             startActivity(intent);
             return false;
         }
