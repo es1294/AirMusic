@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +16,9 @@ import android.widget.ListView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class ListOfSongs extends AppCompatActivity {
 
@@ -54,6 +60,7 @@ public class ListOfSongs extends AppCompatActivity {
                 int resID = getResources().getIdentifier(list.get(i), "raw", getPackageName());
 
                 openMusicPlayer(resID);
+
             }
         });
     }
@@ -65,6 +72,49 @@ public class ListOfSongs extends AppCompatActivity {
 
         Intent intent = new Intent(this, musicPlayer.class);
         intent.putExtra(EXTRA_ID, resID);
+        intent.setFlags( FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.drop_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.profile){
+            Intent intent = new Intent(this, profile.class);
+            startActivity(intent);
+            return false;
+        }
+        else if (id == R.id.drop_menu){
+            Intent intent = new Intent(this , musicPlayer.class );
+            intent.setFlags( FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            finish();
+            return false;
+        }
+        else if (id == R.id.feed){
+            Intent intent = new Intent(this, feed.class);
+            startActivity(intent);
+            return false;
+        }
+        else if(id == R.id.help){
+            Intent intent = new Intent(this, help.class);
+            startActivity(intent);
+            return false;
+        }
+        else if(id == R.id.song_list){
+            Intent intent= new Intent(this, ListOfSongs.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

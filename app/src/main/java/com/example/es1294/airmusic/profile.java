@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
 public class profile extends AppCompatActivity {
 
     private Button profileEditButton;
@@ -67,11 +69,14 @@ public class profile extends AppCompatActivity {
         if(id == R.id.profile){
             Intent intent = new Intent(this, profile.class);
             startActivity(intent);
+            finish();
             return false;
         }
         else if (id == R.id.drop_menu){
             Intent intent = new Intent(this , musicPlayer.class );
+            intent.setFlags( FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
+            finish();
             return false;
         }
         else if (id == R.id.feed){
@@ -82,11 +87,13 @@ public class profile extends AppCompatActivity {
         else if(id == R.id.help){
             Intent intent = new Intent(this, help.class);
             startActivity(intent);
+            finish();
             return false;
         }
         else if(id == R.id.song_list){
             Intent intent= new Intent(this, ListOfSongs.class);
             startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

@@ -15,11 +15,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
+
+import java.lang.reflect.Field;
+import java.util.Random;
 
 public class musicPlayer extends AppCompatActivity {
 
-
+    Field[] fields;
     int resID;              //id of song that was clicked in ListOfSongs class
     Button play_button;     // button on music screen to play the current song
     SeekBar song_progress;  //seekbar that allows user to fast foward or rewind
@@ -36,6 +40,19 @@ public class musicPlayer extends AppCompatActivity {
 
         Intent intent = getIntent();
         resID = intent.getIntExtra(ListOfSongs.EXTRA_ID, 0);
+        fields = R.raw.class.getFields();
+
+        //if user decides to go straight to music page
+        //without choosing a song from the list
+        //then play a random song
+
+        if(resID == 0){
+
+            Random random = new Random();
+            int anysong = random.nextInt(fields.length);
+            String songname = fields[anysong].getName();
+            resID = getResources().getIdentifier(songname, "raw", getPackageName());
+        }
 
         //instantiating the variables to the contents in the drawable files
 
@@ -167,6 +184,8 @@ public class musicPlayer extends AppCompatActivity {
             mediaPlayer.pause();
             play_button.setBackgroundResource(R.drawable.play_button);
         }
+
+
     }
 
 
@@ -195,9 +214,7 @@ public class musicPlayer extends AppCompatActivity {
             return false;
         }
         else if (id == R.id.drop_menu){
-           // Intent intent = new Intent(this , musicPlayer.class );
-            Intent intent = getIntent();
-            startActivity(intent);
+            Toast.makeText(this,"You're already in Music",Toast.LENGTH_LONG).show();
             return false;
         }
         else if (id == R.id.feed){

@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
 public class help extends AppCompatActivity {
 
     @Override
@@ -33,6 +35,7 @@ public class help extends AppCompatActivity {
         }
         else if (id == R.id.drop_menu){
             Intent intent = new Intent(this , musicPlayer.class );
+            intent.setFlags( FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
             return false;
         }
