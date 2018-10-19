@@ -27,10 +27,10 @@ import java.util.Random;
 
 public class musicPlayer extends AppCompatActivity {
 
-    List<Field> fields;
-    float volumeNumber;
+    List<Field> fields;     //mp3 info inside the raw file
+    float volumeNumber;     // volume at wich the seekbar should be set to.
     int resID;              //id of song that was clicked in ListOfSongs class
-    ArrayList<Integer> allSongIDs;
+    ArrayList<Integer> allSongIDs;  //song id for each of the songs in the list
     Button play_button;     // button on music screen to play the current song
     SeekBar song_progress;  //seekbar that allows user to fast foward or rewind
     SeekBar volume_control; //seekbar that allows user to set the volume
@@ -145,6 +145,8 @@ public class musicPlayer extends AppCompatActivity {
             }
         }).start();
 
+        //updates the list of songs in the background
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -210,6 +212,8 @@ public class musicPlayer extends AppCompatActivity {
 
     }
 
+    //plays next song in list (allSongsID)
+
     public void nextButtonClick(View view){
 
         int currentSong = allSongIDs.indexOf(resID);
@@ -232,20 +236,40 @@ public class musicPlayer extends AppCompatActivity {
 
     }
 
+    //plays previous song in list
+
     public void prevButtonClick(View view){
+        int currentSong = allSongIDs.indexOf(resID);
+        mediaPlayer.reset();
+        mediaPlayer.release();
+        mediaPlayer = null;
+
+        if(currentSong == 0){
+            resID = allSongIDs.get(allSongIDs.size()-1);
+            mediaPlayer = mediaPlayer.create(this,resID);
+            setConfigs();
+            mediaPlayer.start();
+        }
+        else{
+            resID = allSongIDs.get(currentSong -1);
+            mediaPlayer = mediaPlayer.create(this,resID);
+            setConfigs();
+            mediaPlayer.start();
+        }
 
     }
 
     public void setConfigs(){
         total_time = mediaPlayer.getDuration();
         mediaPlayer.setVolume(volumeNumber,volumeNumber);
+        play_button.setBackgroundResource(R.drawable.pause_button);
 
-        if(mediaPlayer.isPlaying()){
-            play_button.setBackgroundResource(R.drawable.pause_button);
-        }
-        else{
-            play_button.setBackgroundResource(R.drawable.play_button);
-        }
+//        if(mediaPlayer.isPlaying()){
+//            play_button.setBackgroundResource(R.drawable.pause_button);
+//        }
+//        else{
+//            play_button.setBackgroundResource(R.drawable.play_button);
+//        }
 
 
     }
