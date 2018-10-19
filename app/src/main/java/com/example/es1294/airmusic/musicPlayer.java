@@ -2,6 +2,7 @@ package com.example.es1294.airmusic;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,12 +20,17 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class musicPlayer extends AppCompatActivity {
 
-    Field[] fields;
+    List<Field> fields;
+    float volumeNumber;
     int resID;              //id of song that was clicked in ListOfSongs class
+    ArrayList<Integer> allSongIDs;
     Button play_button;     // button on music screen to play the current song
     SeekBar song_progress;  //seekbar that allows user to fast foward or rewind
     SeekBar volume_control; //seekbar that allows user to set the volume
@@ -40,7 +46,8 @@ public class musicPlayer extends AppCompatActivity {
 
         Intent intent = getIntent();
         resID = intent.getIntExtra(ListOfSongs.EXTRA_ID, 0);
-        fields = R.raw.class.getFields();
+        fields = Arrays.asList(R.raw.class.getFields());
+        allSongIDs = new ArrayList<>();
 
         //if user decides to go straight to music page
         //without choosing a song from the list
@@ -49,8 +56,8 @@ public class musicPlayer extends AppCompatActivity {
         if(resID == 0){
 
             Random random = new Random();
-            int anysong = random.nextInt(fields.length);
-            String songname = fields[anysong].getName();
+            int anysong = random.nextInt(fields.size());
+            String songname = fields.get(anysong).getName();
             resID = getResources().getIdentifier(songname, "raw", getPackageName());
         }
 
@@ -104,7 +111,7 @@ public class musicPlayer extends AppCompatActivity {
         volume_control.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                float volumeNumber = progress /100f;
+                volumeNumber = progress /100f;
                 mediaPlayer.setVolume(volumeNumber, volumeNumber);
             }
 
@@ -134,8 +141,23 @@ public class musicPlayer extends AppCompatActivity {
                         Thread.sleep(1000);
                     }catch (InterruptedException e){}
                 }
+
             }
         }).start();
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                for(int i = 0; i< fields.size();i++){
+                    String songName = fields.get(i).getName();
+                    int tempID = getResources().getIdentifier(songName, "raw", getPackageName());
+                    allSongIDs.add(tempID);
+                }
+            }
+        });
+
+
     }
 
     private Handler handler = new Handler(){
@@ -182,6 +204,46 @@ public class musicPlayer extends AppCompatActivity {
         }
         else{
             mediaPlayer.pause();
+            play_button.setBackgroundResource(R.drawable.play_button);
+        }
+
+
+    }
+
+    public void nextButtonClick(View view){
+
+        int currentSong = allSongIDs.indexOf(resID);
+        mediaPlayer.reset();
+        mediaPlayer.release();
+        mediaPlayer = null;
+
+            if(currentSong == allSongIDs.size()-1){
+                resID = allSongIDs.get(0);
+                mediaPlayer = mediaPlayer.create(this,resID);
+                setConfigs();
+                mediaPlayer.start();
+            }
+            else{
+                resID = allSongIDs.get(currentSong +1);
+                mediaPlayer = mediaPlayer.create(this,resID);
+                setConfigs();
+                mediaPlayer.start();
+            }
+
+    }
+
+    public void prevButtonClick(View view){
+
+    }
+
+    public void setConfigs(){
+        total_time = mediaPlayer.getDuration();
+        mediaPlayer.setVolume(volumeNumber,volumeNumber);
+
+        if(mediaPlayer.isPlaying()){
+            play_button.setBackgroundResource(R.drawable.pause_button);
+        }
+        else{
             play_button.setBackgroundResource(R.drawable.play_button);
         }
 

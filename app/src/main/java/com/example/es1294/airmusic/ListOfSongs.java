@@ -58,7 +58,6 @@ public class ListOfSongs extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 int resID = getResources().getIdentifier(list.get(i), "raw", getPackageName());
-
                 openMusicPlayer(resID);
 
             }
