@@ -18,6 +18,8 @@ import android.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     Button login;     // button on music screen to play the current song
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
                 openProfile();
             }
         });
-
     }
 
     public void openProfile(){
         Intent intent = new Intent(this, profile.class);
         startActivity(intent);
     }
+
 }

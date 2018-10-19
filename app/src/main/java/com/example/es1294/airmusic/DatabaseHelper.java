@@ -6,14 +6,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    //change database version to 3 so that it can be converted to MySQL (hopefully)
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Users.db";
     private static final String TABLE_NAME = "users";
     private static final String COLUMN_ID = "id";
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_EMAIL = "email";
-    private static final String COLUMN_USERNAME  = "username";
-    private static final String COLUMN_PASSWORD = "password";
+    private static final String COLUMN_NAME = "n";
+    private static final String COLUMN_EMAIL = "e";
+    private static final String COLUMN_USERNAME  = "uname";
+    private static final String COLUMN_PASSWORD = "pass";
     SQLiteDatabase sqLiteDatabase;
 
     private static final String TABLE_CREATE = "create table users (id integer primary key not null auto_increment , " +
