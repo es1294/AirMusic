@@ -42,16 +42,16 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*usernameInput = (EditText) findViewById(R.id.editText);
+                usernameInput = (EditText) findViewById(R.id.username_editText);
                 String userstr = usernameInput.getText().toString();
                 passwordInput = (EditText) findViewById(R.id.password_editText);
-                String passstr = passwordInput.getText().toString();*/
+                String passstr = passwordInput.getText().toString();
 
-               /* String password = helper.searchPass(userstr);
+                String password = helper.searchPass(userstr);
                 if(passstr.equals(password)){
                     openProfile();
                 }
-                else{*/
+                //else{
                    //show popup message
                     Toast error = Toast.makeText(MainActivity.this, "Username and Pass mismatch" , Toast.LENGTH_SHORT);
                     error.show();

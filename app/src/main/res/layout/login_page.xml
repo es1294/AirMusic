@@ -17,7 +17,7 @@ android:layout_height="match_parent">
         app:srcCompat="@drawable/airlogo" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/trash2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/password_editText"
@@ -28,7 +28,7 @@ android:layout_height="match_parent">
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/password_editText"
+        android:id="@+id/trash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
