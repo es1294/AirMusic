@@ -18,14 +18,14 @@
     <string name="password">Password</string>
     <string name="confrim_password">Confrim Password</string>
     <string name="sign_in">Sign In</string>
-    <string name="username">Username</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
+    <!-- <string name="username">Username</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="sign_in">Sign In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    --><string name="confirm_password">Confirm Password</string>
+    <!-- <string name="sign_in">Sign In</string> -->
     <string name="password_req">Password length is 8 characters there should be at least one capital letter and at least one number</string>
-    <string name="welcome_to_air_music">Welcome to Air Music</string>
+    <!-- <string name="welcome_to_air_music">Welcome to Air Music</string> -->
     <string name="please_create_your_account">Please Create Your Account</string>
 </resources>
