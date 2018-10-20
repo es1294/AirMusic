@@ -1,6 +1,7 @@
 package com.example.es1294.airmusic;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -56,7 +57,17 @@ public class Create_Account extends Activity {
 
                 helper.insertUser(user);
 
+                //only after - return to login page
+                openLoginActivity();
+
             }
+
+
         }
+    }
+
+    public void openLoginActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
