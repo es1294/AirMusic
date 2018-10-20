@@ -24,6 +24,7 @@
         <activity android:name=".profile" />
         <activity android:name=".feed" />
         <activity android:name=".edit_profile" />
+        <activity android:name=".Create_Account" />
         <activity android:name=".musicPlayer"
                     android:launchMode="singleTop"/>
         <activity android:name=".help" />
