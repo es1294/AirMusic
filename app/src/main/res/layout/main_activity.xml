@@ -39,14 +39,7 @@
         android:hint="Password"
         android:inputType="textPassword" />
 
-    <TextView
-        android:id="@+id/createAccount_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="107dp"
-        android:text="Create New Account" />
+
 
     <Button
         android:id="@+id/login_button"
@@ -56,4 +49,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-196dp"
         android:text="Login" />
+
+    <Button
+        android:id="@+id/newAccountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:text="Sign Up" />
+
 </RelativeLayout>
