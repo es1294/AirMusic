@@ -2,11 +2,10 @@ package com.example.es1294.airmusic;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,12 +14,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.widget.Toast;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 
 public class musicPlayer extends AppCompatActivity {
 
-
+    List<Field> fields;     //the mp3 fields from the raw file
+    float volumeNumber;     //sets how loud the music will be played at
     int resID;              //id of song that was clicked in ListOfSongs class
+    ArrayList<Integer> allSongIDs;  //list of all the songs ids
     Button play_button;     // button on music screen to play the current song
     SeekBar song_progress;  //seekbar that allows user to fast foward or rewind
     SeekBar volume_control; //seekbar that allows user to set the volume
@@ -36,6 +43,20 @@ public class musicPlayer extends AppCompatActivity {
 
         Intent intent = getIntent();
         resID = intent.getIntExtra(ListOfSongs.EXTRA_ID, 0);
+        fields = Arrays.asList(R.raw.class.getFields());
+        allSongIDs = new ArrayList<>();
+
+        //if user decides to go straight to music page
+        //without choosing a song from the list
+        //then play a random song
+
+        if(resID == 0){
+
+            Random random = new Random();
+            int anysong = random.nextInt(fields.size());
+            String songname = fields.get(anysong).getName();
+            resID = getResources().getIdentifier(songname, "raw", getPackageName());
+        }
 
         //instantiating the variables to the contents in the drawable files
 
@@ -50,8 +71,9 @@ public class musicPlayer extends AppCompatActivity {
         mediaPlayer = mediaPlayer.create(this,resID);
         mediaPlayer.setLooping(true);
         mediaPlayer.seekTo(0);
-        mediaPlayer.setVolume(0.5f , 0.5f);
-        total_time = mediaPlayer.getDuration();
+        volumeNumber = 0.5f;
+        setConfigs();
+        mediaPlayer.start();
 
         //implements seong progress seekbar
         //instantiates the variable song_progress to the seekbar in the MainActivity.xml
@@ -84,10 +106,11 @@ public class musicPlayer extends AppCompatActivity {
 
         //changes volumes on volume seekbar
 
+
         volume_control.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                float volumeNumber = progress /100f;
+                volumeNumber = progress /100f;
                 mediaPlayer.setVolume(volumeNumber, volumeNumber);
             }
 
@@ -117,8 +140,26 @@ public class musicPlayer extends AppCompatActivity {
                         Thread.sleep(1000);
                     }catch (InterruptedException e){}
                 }
+
             }
         }).start();
+
+        //loads the list of songs in the background to be able to skip songs
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                for(int i = 0; i< fields.size();i++){
+                    String songName = fields.get(i).getName();
+                    int tempID = getResources().getIdentifier(songName, "raw", getPackageName());
+                    allSongIDs.add(tempID);
+                }
+
+            }
+        });
+
+
     }
 
     private Handler handler = new Handler(){
@@ -167,6 +208,74 @@ public class musicPlayer extends AppCompatActivity {
             mediaPlayer.pause();
             play_button.setBackgroundResource(R.drawable.play_button);
         }
+
+
+    }
+
+    public void nextButtonClick(View view){
+
+        int currentSong = allSongIDs.indexOf(resID);
+       // mediaPlayer.reset();
+        mediaPlayer.release();
+        mediaPlayer = null;
+
+            if(currentSong == allSongIDs.size()-1){
+                resID = allSongIDs.get(0);
+                mediaPlayer = mediaPlayer.create(this,resID);
+                setConfigs();
+                mediaPlayer.start();
+            }
+            else{
+                resID = allSongIDs.get(currentSong +1);
+                mediaPlayer = mediaPlayer.create(this,resID);
+                setConfigs();
+                mediaPlayer.start();
+            }
+
+    }
+
+    public void prevButtonClick(View view){
+
+        int currentSong = allSongIDs.indexOf(resID);
+        mediaPlayer.release();
+        mediaPlayer = null;
+
+        if(currentSong == 0){
+            resID = allSongIDs.get(allSongIDs.size()-1);
+            mediaPlayer = mediaPlayer.create(this,resID);
+            setConfigs();
+            mediaPlayer.start();
+        }
+        else{
+            resID = allSongIDs.get(currentSong -1);
+            mediaPlayer = mediaPlayer.create(this,resID);
+            setConfigs();
+            mediaPlayer.start();
+        }
+
+
+    }
+
+    public void setConfigs(){
+        total_time = mediaPlayer.getDuration();
+        mediaPlayer.setVolume(volumeNumber,volumeNumber);
+        play_button.setBackgroundResource(R.drawable.pause_button);
+
+
+    }
+
+    public void stopPlaying(){
+        if(mediaPlayer != null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopPlaying();
     }
 
     //for all classes in menu, this makes the dropdown menu available
@@ -190,8 +299,7 @@ public class musicPlayer extends AppCompatActivity {
             return false;
         }
         else if (id == R.id.drop_menu){
-            Intent intent = new Intent(this , musicPlayer.class );
-            startActivity(intent);
+            Toast.makeText(this,"You're already in Music",Toast.LENGTH_SHORT).show();
             return false;
         }
         else if (id == R.id.feed){
