@@ -47,15 +47,25 @@ public class MainActivity extends AppCompatActivity {
                 passwordInput = (EditText) findViewById(R.id.password_editText);
                 String passstr = passwordInput.getText().toString();
 
-                String password = helper.searchPass(userstr);
-                if(passstr.equals(password)){
-                    openProfile();
+                String username = helper.doesUserExist(userstr);
+                if(!userstr.equals(username)){
+                    Toast usernameExistsError = Toast.makeText(MainActivity.this, "No account with that username!" , Toast.LENGTH_SHORT);
+                    usernameExistsError.show();
+                }else{
+                    String password = helper.searchPass(userstr);
+                    if(userstr.equals(username)){
+                        if(passstr.equals(password)) {
+                            Toast loginSuccess = Toast.makeText(MainActivity.this, "Login Successful!" , Toast.LENGTH_SHORT);
+                            loginSuccess.show();
+                            openProfile();
+                        }else{
+                            //show popup message
+                            Toast error = Toast.makeText(MainActivity.this, "The password you entered is incorrect" , Toast.LENGTH_SHORT);
+                            error.show();
+                        }
+                    }
                 }
-                //else{
-                   //show popup message
-                    Toast error = Toast.makeText(MainActivity.this, "Username and Pass mismatch" , Toast.LENGTH_SHORT);
-                    error.show();
-                //}
+
             }
         });
     }

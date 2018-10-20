@@ -70,6 +70,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return b;
     }
 
+    public String doesUserExist(String uname){
+        sqLiteDatabase = this.getReadableDatabase();
+        String query = "select username from "+TABLE_NAME;
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+        String a, b;
+        b = "not found";
+        if(cursor.moveToFirst()){
+            do{
+                a = cursor.getString(0);
+
+                if(a.equals(uname)){
+                    b = cursor.getString(0);
+                    break;
+                }
+            }
+            while(cursor.moveToNext());
+        }
+
+        return b;
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         String query = "DROP TABLE IF EXISTS " + TABLE_NAME;
