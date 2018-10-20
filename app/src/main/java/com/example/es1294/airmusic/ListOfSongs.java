@@ -17,6 +17,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
@@ -24,8 +25,8 @@ public class ListOfSongs extends AppCompatActivity {
 
     public static final String EXTRA_ID ="com.example.es1294.airmusic.EXTRA_ID";
 
-    ListView listSongs;
-    List<String> list;
+    ListView listSongs;     //listSongs is the container that will list all songs in UI
+    List<String> list;      //list is an array that will store the name of the mp3 files
     ListAdapter adapter;
 
     @Override
@@ -33,13 +34,11 @@ public class ListOfSongs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_songs);
 
-        //listSongs is the container that will list all songs
-        //list is an array that will store the fields of the mp3 files
 
         listSongs = (ListView) findViewById(R.id.song_list);
         list = new ArrayList<>();
 
-        //get the files in raw and put them in list array
+        //grabs the fields from raw file and stores them in Field[]
 
         Field[] fields = R.raw.class.getFields();
         for(int i =0; i < fields.length; i++){
@@ -70,11 +69,12 @@ public class ListOfSongs extends AppCompatActivity {
     public void openMusicPlayer(int resID){
 
         Intent intent = new Intent(this, musicPlayer.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(EXTRA_ID, resID);
-        intent.setFlags( FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
