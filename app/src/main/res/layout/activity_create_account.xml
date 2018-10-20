@@ -79,7 +79,8 @@
         android:layout_height="34dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:inputType="text|textCapCharacters|textPassword|number|numberPassword"
+        android:inputType="text|textPassword"
+        android:digits="0,1,2,3,4,5,6,7,8,9,qwertyuiopasdfghjklzxvcbnm"
         android:singleLine="true"
         android:visibility="visible" />
 
@@ -112,7 +113,8 @@
         android:layout_height="32dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:inputType="text|textCapCharacters|textPassword|number|numberPassword"
+        android:inputType="text|textPassword"
+        android:digits="0,1,2,3,4,5,6,7,8,9,qwertyuiopasdfghjklzxvcbnm"
         android:visibility="visible" />
 
     <Space

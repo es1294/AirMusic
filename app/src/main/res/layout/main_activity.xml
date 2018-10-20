@@ -56,4 +56,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-196dp"
         android:text="Login" />
+
+    <Button
+        android:id="@+id/newAccountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:text="Create new" />
+
 </RelativeLayout>
