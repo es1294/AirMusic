@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
 public class help extends AppCompatActivity {
 
     @Override
@@ -27,24 +29,29 @@ public class help extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.profile){
-            Intent intent = new Intent(help.this, profile.class);
-            startActivity(intent);
-            return false;
-        }
-        else if (id == R.id.feed){
-            Intent intent = new Intent(help.this, feed.class);
+            Intent intent = new Intent(this, profile.class);
             startActivity(intent);
             return false;
         }
         else if (id == R.id.drop_menu){
-            Intent intent = new Intent(help.this , musicPlayer.class );
+            Intent intent = new Intent(this , musicPlayer.class );
+            intent.setFlags( FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            return false;
+        }
+        else if (id == R.id.feed){
+            Intent intent = new Intent(this, feed.class);
             startActivity(intent);
             return false;
         }
         else if(id == R.id.help){
-            Intent intent = new Intent(help.this, help.class);
+            Intent intent = new Intent(this, help.class);
             startActivity(intent);
             return false;
+        }
+        else if(id == R.id.song_list){
+            Intent intent= new Intent(this, ListOfSongs.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

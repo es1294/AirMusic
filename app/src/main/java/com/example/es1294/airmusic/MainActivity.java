@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 if(!userstr.equals(username)){
                     Toast usernameExistsError = Toast.makeText(MainActivity.this, "No account with that username!" , Toast.LENGTH_SHORT);
                     usernameExistsError.show();
+                }else if(helper.doesUserExist(userstr).equals("")){
+                    Toast blank = Toast.makeText(MainActivity.this, "Enter a username" , Toast.LENGTH_SHORT);
+                    blank.show();
                 }else{
                     String password = helper.searchPass(userstr);
                     if(userstr.equals(username)){
