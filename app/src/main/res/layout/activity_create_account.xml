@@ -52,7 +52,7 @@
     <EditText
         android:id="@+id/username"
         android:layout_width="418dp"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:inputType="text|textPersonName"
@@ -76,7 +76,7 @@
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="text|textPassword"
@@ -110,7 +110,7 @@
     <EditText
         android:id="@+id/confirmpassword"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="text|textPassword"

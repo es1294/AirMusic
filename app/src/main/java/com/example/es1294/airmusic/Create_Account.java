@@ -10,6 +10,8 @@ import android.widget.Toast;
 public class Create_Account extends Activity {
 
     DatabaseHelper helper = new DatabaseHelper(this);
+    boolean passFlag = true;
+    boolean emailFlag = true;
 
 @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +24,8 @@ public class Create_Account extends Activity {
         //Toast genMessage = Toast.makeText(Create_Account.this, "Button Pushed?", Toast.LENGTH_SHORT);
         //genMessage.show();
         if(v.getId() == R.id.signin){
-            Toast onClickMessage = Toast.makeText(Create_Account.this, "Button Pushed yes", Toast.LENGTH_SHORT);
-            onClickMessage.show();
+            //Toast onClickMessage = Toast.makeText(Create_Account.this, "Button Pushed yes", Toast.LENGTH_SHORT);
+            //onClickMessage.show();
             EditText username = (EditText) findViewById(R.id.username);
             EditText password = (EditText) findViewById(R.id.password);
             EditText confrimpass = (EditText) findViewById(R.id.confirmpassword);
@@ -38,17 +40,19 @@ public class Create_Account extends Activity {
 
             if(!passstr.equals(confrimpassstr)){
                 // error message
+                passFlag = false;
                 Toast pass = Toast.makeText(Create_Account.this, "Passwords do not match",Toast.LENGTH_SHORT);
                 pass.show();
             }
             if(!emailstr.equals(confirmemstr)){
                 // error message
+                emailFlag = false;
                 Toast mail = Toast.makeText(Create_Account.this, "Email does not match", Toast.LENGTH_SHORT);
                 mail.show();
             }
-            else{
+            if((passFlag == true) && (emailFlag == true)){
                 //add to database
-                Toast message = Toast.makeText(Create_Account.this, "Reached add to database", Toast.LENGTH_SHORT);
+                Toast message = Toast.makeText(Create_Account.this, "Added account to database", Toast.LENGTH_SHORT);
                 message.show();
                 User user = new User();
                 user.setUsername(userstr);
