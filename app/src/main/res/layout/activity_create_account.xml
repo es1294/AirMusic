@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/createaccount"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_background2"
     android:orientation="vertical"
-    android:visibility="visible">
+    android:visibility="visible">-->
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/app_background2"
+    android:layout_height="match_parent"
+    tools:context=".Create_Account">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
     <TextView
         android:id="@+id/greeting"
@@ -49,13 +67,27 @@
         android:textSize="16sp"
         android:visibility="visible" />
 
+    <TextView
+        android:id="@+id/usernameReq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="*between 8-12 characters"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/background_light"
+        android:textSize="12sp"
+        android:visibility="visible" />
+
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints=""
+        android:maxLength="12"
         android:ems="10"
         android:inputType="text|textPersonName"
+        android:textColorHint="#C0C0C0"
+        android:textColor="#C0C0C0"
+        android:backgroundTint="#C0C0C0"
         android:singleLine="true"
         android:visibility="visible" />
 
@@ -73,24 +105,28 @@
         android:textSize="16sp"
         android:visibility="visible" />
 
+    <TextView
+        android:id="@+id/password_req"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="*between 8-12 characters, at least 1 number"
+        android:textColor="@android:color/background_light"
+        android:textSize="12sp"
+        android:visibility="visible" />
+
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:digits="0,1,2,3,4,5,6,7,8,9,qwertyuiopasdfghjklzxvcbnm"
         android:ems="10"
+        android:maxLength="12"
         android:importantForAutofill="no"
         android:inputType="text|textPassword"
+        android:textColorHint="#C0C0C0"
+        android:textColor="#C0C0C0"
+        android:backgroundTint="#C0C0C0"
         android:singleLine="true"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/password_req"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/password_req"
-        android:textColor="@android:color/background_light"
-        android:textSize="12sp"
         android:visibility="visible" />
 
     <Space
@@ -115,6 +151,9 @@
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="text|textPassword"
+        android:textColorHint="#C0C0C0"
+        android:textColor="#C0C0C0"
+        android:backgroundTint="#C0C0C0"
         android:visibility="visible" />
 
     <Space
@@ -137,6 +176,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textColorHint="#C0C0C0"
+        android:textColor="#C0C0C0"
+        android:backgroundTint="#C0C0C0"
         android:inputType="textEmailAddress" />
 
     <Space
@@ -158,18 +200,25 @@
         android:id="@+id/confirmemail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="#C0C0C0"
+        android:textColor="#C0C0C0"
+        android:backgroundTint="#C0C0C0"
         android:ems="10"
         android:inputType="textEmailAddress" />
 
     <Button
         android:id="@+id/signin"
-        style="@style/Widget.AppCompat.Button.Colored"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_dark"
+        android:textColor="#C0C0C0"
         android:clickable="true"
         android:onClick="onButtonClick"
         android:text="@string/sign_in"
         android:visibility="visible" />
+    </LinearLayout>
+    </ScrollView>
 
-</LinearLayout>
+<!--</LinearLayout>-->
+</android.support.constraint.ConstraintLayout>
