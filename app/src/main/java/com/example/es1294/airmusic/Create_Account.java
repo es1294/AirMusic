@@ -109,7 +109,8 @@ public class Create_Account extends Activity {
             }
             if((passFlag == true) && (emailFlag == true)){
                 //add to database
-                Toast message = Toast.makeText(Create_Account.this, "Added account to database!", Toast.LENGTH_SHORT);
+
+                Toast message = Toast.makeText(Create_Account.this, "Added account to database", Toast.LENGTH_SHORT);
                 message.show();
                 User user = new User();
                 user.setUsername(userstr);
