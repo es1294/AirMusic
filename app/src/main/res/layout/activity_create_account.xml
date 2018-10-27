@@ -28,6 +28,7 @@
 
     <TextView
         android:id="@+id/greeting"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome_to_air_music"
@@ -44,6 +45,7 @@
 
     <TextView
         android:id="@+id/textView15"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/please_create_your_account"
@@ -109,7 +111,7 @@
         android:id="@+id/password_req"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="*between 8-12 characters, at least 1 number"
+        android:text="*between 8-12 characters, at least 1 number and captial letter"
         android:textColor="@android:color/background_light"
         android:textSize="12sp"
         android:visibility="visible" />
@@ -118,7 +120,7 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="0,1,2,3,4,5,6,7,8,9,qwertyuiopasdfghjklzxvcbnm"
+        android:digits="0,1,2,3,4,5,6,7,8,9,qwertyuiopasdfghjklzxvcbnmQWERTYUIOPASDFGHJKLZXCVBNM"
         android:ems="10"
         android:maxLength="12"
         android:importantForAutofill="no"
@@ -147,7 +149,7 @@
         android:id="@+id/confirmpassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="0,1,2,3,4,5,6,7,8,9,qwertyuiopasdfghjklzxvcbnm"
+        android:digits="0,1,2,3,4,5,6,7,8,9,qwertyuiopasdfghjklzxvcbnmQWERTYUIOPASDFGHJKLZXCVBNM"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="text|textPassword"
