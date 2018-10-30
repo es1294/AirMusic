@@ -14,8 +14,13 @@ import java.util.regex.Pattern;
 public class Create_Account extends Activity {
 
     DatabaseHelper helper = new DatabaseHelper(this);
-    boolean passFlag = true;
-    boolean emailFlag = true;
+    boolean passLengthFlag = false;
+    boolean passMatchFlag = false;
+    boolean passLowFlag = false;
+    boolean passCapFlag = false;
+    boolean passNumFlag = false;
+    boolean emailMatchFlag = false;
+    boolean emailFormatFlag = false;
 
 @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,71 +48,105 @@ public class Create_Account extends Activity {
             String confirmemstr = confirmem.getText().toString();
 
             //check username length
-            if(userstr.length() < 8 || userstr.length() > 12) {
-                passFlag = false;
-                Toast userLimit = Toast.makeText(Create_Account.this, "username is too short!", Toast.LENGTH_SHORT);
-                userLimit.show();
+            if((userstr.length() > 7) && (userstr.length() < 13)) {
+                passLengthFlag = true;
+            }else{
+                passLengthFlag = false;
+                if(userstr.length() == 0){
+                    Toast blankUser = Toast.makeText(Create_Account.this, "enter a username!", Toast.LENGTH_SHORT);
+                    blankUser.show();
+                }else {
+                    Toast userLimit = Toast.makeText(Create_Account.this, "username is too short!", Toast.LENGTH_SHORT);
+                    userLimit.show();
+                }
             }
 
             //check password match
-            if(!passstr.equals(confrimpassstr)){
+            if(passstr.equals(confrimpassstr)){
                 // error message
-                passFlag = false;
-                Toast pass = Toast.makeText(Create_Account.this, "passwords do not match",Toast.LENGTH_SHORT);
-                pass.show();
-            }else {
+                passMatchFlag = true;
+
                 //check password length
-                if (passstr.length() < 8 || passstr.length() > 12) {
-                    passFlag = false;
-                    Toast passLimit = Toast.makeText(Create_Account.this, "password is too short!", Toast.LENGTH_SHORT);
-                    passLimit.show();
-                } else {
+                if ((passstr.length() > 7) && (passstr.length() < 13)) {
+                    passLengthFlag = true;
+
                     //using pattern matching to test for at least 1 number
                     Pattern p1 = Pattern.compile("[a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*");
                     Matcher m1 = p1.matcher(passstr);
                     boolean numberCheck = m1.matches();
                     if (numberCheck == false) {
-                        passFlag = false;
+                        passNumFlag = false;
                         Toast passNumber = Toast.makeText(Create_Account.this, "password needs a number!", Toast.LENGTH_SHORT);
                         passNumber.show();
+                    }else{
+                        passNumFlag = true;
                     }
                     //pattern matching to test for at least 1 capital letter
                     Pattern p2 = Pattern.compile("[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*");
                     Matcher m2 = p2.matcher(passstr);
                     boolean capitalCheck = m2.matches();
                     if (capitalCheck == false) {
-                        passFlag = false;
+                        passCapFlag = false;
                         Toast passCapital = Toast.makeText(Create_Account.this, "password needs a capital!", Toast.LENGTH_SHORT);
                         passCapital.show();
+                    }else{
+                        passCapFlag = true;
                     }
                     //pattern matching to test for at least 1 lowercase letter
                     Pattern p4 = Pattern.compile("[A-Za-z0-9]*[a-z]+[A-Za-z0-9]*");
                     Matcher m4 = p4.matcher(passstr);
                     boolean lowercaseCheck = m4.matches();
                     if (lowercaseCheck == false) {
-                        passFlag = false;
+                        passLowFlag = false;
                         Toast passLower = Toast.makeText(Create_Account.this, "password needs a lowercase!", Toast.LENGTH_SHORT);
                         passLower.show();
+                    }else{
+                        passLowFlag = true;
+                    }
+                } else {
+                    passLengthFlag = false;
+                    if(passstr.length() == 0){
+                        Toast blankPass = Toast.makeText(Create_Account.this, "enter a password!", Toast.LENGTH_SHORT);
+                        blankPass.show();
+                    }else {
+                        Toast passLimit = Toast.makeText(Create_Account.this, "password is too short!", Toast.LENGTH_SHORT);
+                        passLimit.show();
                     }
                 }
+            }else {
+                passMatchFlag = false;
+                Toast pass = Toast.makeText(Create_Account.this, "passwords do not match",Toast.LENGTH_SHORT);
+                pass.show();
             }
 
-            if(!emailstr.equals(confirmemstr)){
+            if(emailstr.equals(confirmemstr)){
                 // error message
-                emailFlag = false;
-                Toast mail = Toast.makeText(Create_Account.this, "emails do not match", Toast.LENGTH_SHORT);
-                mail.show();
-            }else {
+                emailMatchFlag = true;
+
+                //use pattern matching to check for the @ symbol in the email
                 Pattern pE = Pattern.compile("[a-zA-z]+@{1}[a-zA-Z]+.?[a-zA-Z]*");
                 Matcher m3 = pE.matcher(emailstr);
                 boolean emailCheck = m3.matches();
                 if (emailCheck == false) {
-                    emailFlag = false;
-                    Toast mailFormat = Toast.makeText(Create_Account.this, "invalid email!", Toast.LENGTH_SHORT);
-                    mailFormat.show();
+                    emailFormatFlag = false;
+                    if(emailstr.length() == 0){
+                        Toast blankMail = Toast.makeText(Create_Account.this, "enter an email!", Toast.LENGTH_SHORT);
+                        blankMail.show();
+                    }else {
+                        Toast mailFormat = Toast.makeText(Create_Account.this, "invalid email!", Toast.LENGTH_SHORT);
+                        mailFormat.show();
+                    }
+                }else{
+                    emailFormatFlag = true;
                 }
+            } else {
+                emailMatchFlag = false;
+                Toast mail = Toast.makeText(Create_Account.this, "emails do not match", Toast.LENGTH_SHORT);
+                mail.show();
             }
-            if((passFlag == true) && (emailFlag == true)){
+
+            //if all information was put in correctly, make the account!
+            if(passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
                 //add to database
 
                 Toast message = Toast.makeText(Create_Account.this, "Added account to database", Toast.LENGTH_SHORT);
