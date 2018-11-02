@@ -156,6 +156,18 @@ public class Create_Account extends Activity {
                 user.setPassword(passstr);
                 user.setEmail(emailstr);
 
+                //set default strings for profile information
+                user.setFullName("name");
+                user.setAbout("Write whatever you want here!");
+                user.setArtistOne("Add an artist!");
+                user.setArtistTwo("Add another artist!");
+                user.setArtistThree("Add a third artist!");
+                user.setArtistFour("Add a fourth artist!");
+                user.setArtistFive("Add up to five artists!");
+                user.setGenreOne("Add a genre!");
+                user.setGenreTwo("Add another genre!");
+                user.setGenreThree("Add up to three genres!");
+
                 helper.insertUser(user);
 
                 //only after - return to login page
