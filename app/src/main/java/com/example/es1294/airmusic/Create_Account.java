@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 public class Create_Account extends Activity {
 
     DatabaseHelper helper = new DatabaseHelper(this);
+    boolean userLengthFlag = false;
+    boolean userTakenFlag = false;
     boolean passLengthFlag = false;
     boolean passMatchFlag = false;
     boolean passLowFlag = false;
@@ -52,9 +54,17 @@ public class Create_Account extends Activity {
 
             //check username length
             if((userstr.length() > 7) && (userstr.length() < 13)) {
-                passLengthFlag = true;
+                userLengthFlag = true;
+                //check if username has been taken already
+                if(userstr.equals(helper.doesUserExist(userstr))){
+                    userTakenFlag = false;
+                    Toast userTaken = Toast.makeText(Create_Account.this, "That username is taken!", Toast.LENGTH_SHORT);
+                    userTaken.show();
+                }else{
+                    userTakenFlag = true;
+                }
             }else{
-                passLengthFlag = false;
+               userLengthFlag = false;
                 if(userstr.length() == 0){
                     Toast blankUser = Toast.makeText(Create_Account.this, "enter a username!", Toast.LENGTH_SHORT);
                     blankUser.show();
@@ -149,7 +159,7 @@ public class Create_Account extends Activity {
             }
 
             //if all information was put in correctly, make the account!
-            if(passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
+            if(userLengthFlag && userTakenFlag && passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
                 //add to database
 
                 Toast message = Toast.makeText(Create_Account.this, "Added account to database", Toast.LENGTH_SHORT);
