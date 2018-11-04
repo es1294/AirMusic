@@ -13,7 +13,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Users.db";
     private static final String TABLE_NAME = "users";
     private static final String COLUMN_ID = "id";
-    //private static final String COLUMN_NAME = "n";
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_USERNAME  = "username";
     private static final String COLUMN_PASSWORD = "password";
@@ -27,13 +26,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_GENREONE = "genreOne";
     private static final String COLUMN_GENRETWO = "genreTwo";
     private static final String COLUMN_GENRETHREE = "genreThree";
+    private static final String COLUMN_PHOTO = "profilePhoto";
 
     SQLiteDatabase sqLiteDatabase;
 
     private static final String TABLE_CREATE = "create table users (id integer primary key AUTOINCREMENT not null , " +
             "email text not null , username text not null , password text not null , " +
             "fullName text not null , about text not null , artistOne text not null , artistTwo text not null , artistThree text not null ," +
-            " artistFour text not null , artistFive text not null , genreOne text not null , genreTwo text not null , genreThree text not null);";
+            " artistFour text not null , artistFive text not null , genreOne text not null , genreTwo text not null , genreThree text not null , " +
+            "profilePhoto Blob not null);";
 
     public DatabaseHelper (Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_GENREONE , u.getGenreOne());
         values.put(COLUMN_GENRETWO , u.getGenreTwo());
         values.put(COLUMN_GENRETHREE , u.getGenreThree());
+        values.put(COLUMN_PHOTO , u.getProfilePhoto());
 
         sqLiteDatabase.insert(TABLE_NAME ,null, values);
         sqLiteDatabase.close();
@@ -112,6 +114,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return b;
+    }
+
+    public User getUserFromDB(Integer id){
+        User user = new User();
+        sqLiteDatabase = this.getReadableDatabase();
+        //fetch the user entry by id key
+        String query = "select fullName, about, artistOne, artistTwo, artistThree, artistFour, artistFive, genreOne, genreTwo, genreThree, profilePhoto from " + TABLE_NAME + " where id = " + id;
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+        cursor.moveToFirst();
+        user.setFullName(cursor.getString(0));
+        user.setAbout(cursor.getString(1));
+        user.setArtistOne(cursor.getString(2));
+        user.setArtistTwo(cursor.getString(3));
+        user.setArtistThree(cursor.getString(4));
+        user.setArtistFour(cursor.getString(5));
+        user.setArtistFive(cursor.getString(6));
+        user.setGenreOne(cursor.getString(7));
+        user.setGenreTwo(cursor.getString(8));
+        user.setGenreThree(cursor.getString(9));
+        user.setProfilePhoto(cursor.getBlob(10));
+
+        cursor.close();
+        return user;
+    }
+
+    public int getIDFromUsername(String uname){
+        sqLiteDatabase = this.getReadableDatabase();
+        String query = "select id from "+TABLE_NAME+" where username =" + uname;
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+        cursor.moveToFirst();
+        int id = cursor.getInt(0);
+
+        cursor.close();
+        return id;
     }
 
     @Override

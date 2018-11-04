@@ -2,12 +2,15 @@ package com.example.es1294.airmusic;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -167,6 +170,15 @@ public class Create_Account extends Activity {
                 user.setGenreOne("Add a genre!");
                 user.setGenreTwo("Add another genre!");
                 user.setGenreThree("Add up to three genres!");
+
+                //try to store the default pic in the database
+                Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.avatarkorra);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                defaultPic.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                byte[] photoData = stream.toByteArray();
+
+                user.setProfilePhoto(photoData);
 
                 helper.insertUser(user);
 

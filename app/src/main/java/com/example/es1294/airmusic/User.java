@@ -1,5 +1,7 @@
 package com.example.es1294.airmusic;
 
+import java.sql.Blob;
+
 public class User {
     int id;
     String name, email, username, password;
@@ -7,6 +9,7 @@ public class User {
     String dAbout;
     String dArtist1, dArtist2, dArtist3, dArtist4, dArtist5;
     String dGenre1, dGenre2, dGenre3;
+    byte[] profilePhoto;
 
 //getters and setters for each item
     //id
@@ -113,6 +116,12 @@ public class User {
     }
     public String getGenreThree(){
         return this.dGenre3;
+    }
+    public void setProfilePhoto(byte[] data){
+        this.profilePhoto = data;
+    }
+    public byte[] getProfilePhoto(){
+        return this.profilePhoto;
     }
 //end getters and setters
 
