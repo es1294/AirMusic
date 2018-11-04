@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class profile extends AppCompatActivity {
@@ -58,7 +60,10 @@ public class profile extends AppCompatActivity {
        /* Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt("idNumber");*/
 
-      int id = 0;
+      ManageUser manage = new ManageUser(getApplicationContext());
+        HashMap<String,String> idPair = manage.getUserId();
+        String idString = idPair.get("userId");
+        Integer id = Integer.parseInt(idString);
 
         Toast idMessage = Toast.makeText(profile.this, "ID: "+ id, Toast.LENGTH_SHORT);
         idMessage.show();

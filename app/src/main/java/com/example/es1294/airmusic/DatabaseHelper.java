@@ -138,10 +138,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return user;
     }
+    
 
     public int getIDFromUsername(String uname){
         sqLiteDatabase = this.getReadableDatabase();
-        String query = "select id from "+TABLE_NAME+" where username =" + uname;
+        String query = "select id from " + TABLE_NAME + " where " + COLUMN_USERNAME + "='" + uname + "'";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
         cursor.moveToFirst();
         int id = cursor.getInt(0);

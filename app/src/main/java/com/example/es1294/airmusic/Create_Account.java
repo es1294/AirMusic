@@ -170,7 +170,7 @@ public class Create_Account extends Activity {
                 user.setEmail(emailstr);
 
                 //set default strings for profile information
-                user.setFullName("name");
+                user.setFullName("Default Name");
                 user.setAbout("Write whatever you want here!");
                 user.setArtistOne("Add an artist!");
                 user.setArtistTwo("Add another artist!");
