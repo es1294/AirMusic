@@ -99,18 +99,28 @@ public class edit_profile extends AppCompatActivity {
                 EditText genreThree = (EditText) findViewById(R.id.editProfileGenre3);
 
             //Exctract the info from the views
-                String nameString = fullName.getText().toString();
-                String aboutString = about.getText().toString();
-                String artOneString = artistOne.getText().toString();
-                String artTwoString = artistTwo.getText().toString();
-                String artThreeString = artistThree.getText().toString();
-                String artFourString = artistFour.getText().toString();
-                String artFiveString = artistFive.getText().toString();
-                String genreOneString = genreOne.getText().toString();
-                String genreTwoString = genreTwo.getText().toString();
-                String genreThreeString = genreThree.getText().toString();
+                String nnameString = fullName.getText().toString();
+                String naboutString = about.getText().toString();
+                String nartOneString = artistOne.getText().toString();
+                String nartTwoString = artistTwo.getText().toString();
+                String nartThreeString = artistThree.getText().toString();
+                String nartFourString = artistFour.getText().toString();
+                String nartFiveString = artistFive.getText().toString();
+                String ngenreOneString = genreOne.getText().toString();
+                String ngenreTwoString = genreTwo.getText().toString();
+                String ngenreThreeString = genreThree.getText().toString();
                 Drawable photoDrawable = profilePhoto.getDrawable();
-
+            //replace apostrophe
+                String nameString = formatIntoSQL(nnameString);
+                String aboutString = formatIntoSQL(naboutString);
+                String artOneString = formatIntoSQL(nartOneString);
+                String artTwoString = formatIntoSQL(nartTwoString);
+                String artThreeString = formatIntoSQL(nartThreeString);
+                String artFourString = formatIntoSQL(nartFourString);
+                String artFiveString = formatIntoSQL(nartFiveString);
+                String genreOneString = formatIntoSQL(ngenreOneString);
+                String genreTwoString = formatIntoSQL(ngenreTwoString);
+                String genreThreeString = formatIntoSQL(ngenreThreeString);
 
                 //Create a new user object with the values in current fields
                 User user = new User();
@@ -143,6 +153,11 @@ public class edit_profile extends AppCompatActivity {
               openProfileView();
             }
         });
+    }
+
+    public String formatIntoSQL(String string){
+        String newString = string.replaceAll("'", "''");
+        return newString;
     }
 
     public void openProfileView(){
