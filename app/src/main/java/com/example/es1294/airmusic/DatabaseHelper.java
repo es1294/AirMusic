@@ -138,7 +138,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return user;
     }
-    
+
+    public void editUserEntry(User user, Integer id){
+        String idString = id.toString();
+        String fullName = user.getFullName();
+        String about = user.getAbout();
+        String artistOne = user.getArtistOne();
+        String artistTwo = user.getArtistTwo();
+        String artistThree= user.getArtistThree();
+        String artistFour = user.getArtistFour();
+        String artistFive = user.getArtistFive();
+        String genreOne = user.getGenreOne();
+        String genreTwo = user.getGenreTwo();
+        String genreThree = user.getGenreThree();
+        byte[] photo = user.getProfilePhoto();
+
+        sqLiteDatabase = this.getWritableDatabase();
+        String query = "update "+TABLE_NAME +" set " + COLUMN_FULLNAME + " = '" + fullName + "', " +
+                COLUMN_ABOUT + " = '" + about + "', " +
+                COLUMN_ARTISTONE + " = '" + artistOne + "', " +
+                COLUMN_ARTISTTWO + " = '" + artistTwo + "', " +
+                COLUMN_ARTISTTHREE + " = '" + artistThree + "', " +
+                COLUMN_ARTISTFOUR + " = '" + artistFour + "', " +
+                COLUMN_ARTISTFIVE + " = '" + artistFive + "', " +
+                COLUMN_GENREONE + " = '" + genreOne + "', " +
+                COLUMN_GENRETWO + " = '" + genreTwo + "', " +
+                COLUMN_GENRETHREE + " = '" + genreThree + "'" +
+                //COLUMN_PHOTO + " = '" + photo + "'" +
+               " where " + COLUMN_ID + " = " + id;
+        sqLiteDatabase.execSQL(query);
+
+        ContentValues values = new ContentValues();
+        values.put("profilePhoto", photo);
+        sqLiteDatabase.update(TABLE_NAME, values, "id= " + id, null);
+        sqLiteDatabase.close();
+    }
 
     public int getIDFromUsername(String uname){
         sqLiteDatabase = this.getReadableDatabase();

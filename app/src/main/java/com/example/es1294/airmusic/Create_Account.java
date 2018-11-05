@@ -182,7 +182,7 @@ public class Create_Account extends Activity {
                 user.setGenreThree("Add up to three genres!");
 
                 //try to store the default pic in the database
-                Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.avatarkorra);
+                Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic_png_9);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 defaultPic.compress(Bitmap.CompressFormat.PNG, 0, stream);
