@@ -138,7 +138,9 @@ public class edit_profile extends AppCompatActivity {
                 BitmapDrawable bitmapDrawable = ((BitmapDrawable) photoDrawable);
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                //changed compress to JPEG format, with high enough quality that it looks ok
+                //this fixes the bug :)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                 byte[] photoData = stream.toByteArray();
                 user.setProfilePhoto(photoData);
 
