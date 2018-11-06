@@ -2,18 +2,23 @@ package com.example.es1294.airmusic;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Create_Account extends Activity {
 
     DatabaseHelper helper = new DatabaseHelper(this);
+    boolean userLengthFlag = false;
+    boolean userTakenFlag = false;
     boolean passLengthFlag = false;
     boolean passMatchFlag = false;
     boolean passLowFlag = false;
@@ -49,9 +54,17 @@ public class Create_Account extends Activity {
 
             //check username length
             if((userstr.length() > 7) && (userstr.length() < 13)) {
-                passLengthFlag = true;
+                userLengthFlag = true;
+                //check if username has been taken already
+                if(userstr.equals(helper.doesUserExist(userstr))){
+                    userTakenFlag = false;
+                    Toast userTaken = Toast.makeText(Create_Account.this, "That username is taken!", Toast.LENGTH_SHORT);
+                    userTaken.show();
+                }else{
+                    userTakenFlag = true;
+                }
             }else{
-                passLengthFlag = false;
+               userLengthFlag = false;
                 if(userstr.length() == 0){
                     Toast blankUser = Toast.makeText(Create_Account.this, "enter a username!", Toast.LENGTH_SHORT);
                     blankUser.show();
@@ -146,7 +159,7 @@ public class Create_Account extends Activity {
             }
 
             //if all information was put in correctly, make the account!
-            if(passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
+            if(userLengthFlag && userTakenFlag && passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
                 //add to database
 
                 Toast message = Toast.makeText(Create_Account.this, "Added account to database", Toast.LENGTH_SHORT);
@@ -155,6 +168,27 @@ public class Create_Account extends Activity {
                 user.setUsername(userstr);
                 user.setPassword(passstr);
                 user.setEmail(emailstr);
+
+                //set default strings for profile information
+                user.setFullName("Default Name");
+                user.setAbout("Write whatever you want here!");
+                user.setArtistOne("Add an artist!");
+                user.setArtistTwo("Add another artist!");
+                user.setArtistThree("Add a third artist!");
+                user.setArtistFour("Add a fourth artist!");
+                user.setArtistFive("Add up to five artists!");
+                user.setGenreOne("Add a genre!");
+                user.setGenreTwo("Add another genre!");
+                user.setGenreThree("Add up to three genres!");
+
+                //try to store the default pic in the database
+                Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic_png_9);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                defaultPic.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                byte[] photoData = stream.toByteArray();
+
+                user.setProfilePhoto(photoData);
 
                 helper.insertUser(user);
 

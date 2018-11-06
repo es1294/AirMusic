@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
                         if(passstr.equals(password)) {
                             Toast loginSuccess = Toast.makeText(MainActivity.this, "Login Successful!" , Toast.LENGTH_SHORT);
                             loginSuccess.show();
+                            Integer id = helper.getIDFromUsername(userstr);
+                            String stringID = id.toString();
+                            ManageUser manage = new ManageUser(getApplicationContext());
+                            manage.startLogin(stringID);
                             openProfile();
                         }else{
                             //show popup message
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openProfile(){
         Intent intent = new Intent(this, profile.class);
+        //intent.putExtra("idNumber", id);
         startActivity(intent);
     }
 

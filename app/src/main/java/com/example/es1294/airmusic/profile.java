@@ -1,6 +1,8 @@
 package com.example.es1294.airmusic;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +14,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class profile extends AppCompatActivity {
 
     private Button profileEditButton;
+    DatabaseHelper helper = new DatabaseHelper(this);
 
 
     @Override
@@ -48,6 +54,56 @@ public class profile extends AppCompatActivity {
 
             recentSongs.addView(view);
         }
+
+        //SETTING ALL VIEWS TO SHOW DATABASE INFORMATION
+       //get the id from MainActivity intent
+       /* Bundle bundle = getIntent().getExtras();
+        int id = bundle.getInt("idNumber");*/
+
+      ManageUser manage = new ManageUser(getApplicationContext());
+        HashMap<String,String> idPair = manage.getUserId();
+        String idString = idPair.get("userId");
+        Integer id = Integer.parseInt(idString);
+
+        Toast idMessage = Toast.makeText(profile.this, "ID: "+ id, Toast.LENGTH_SHORT);
+        idMessage.show();
+
+       User user = helper.getUserFromDB(id);
+
+       byte[] bytePhoto = user.getProfilePhoto();
+       Bitmap bitmap = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
+
+       ImageView profileView = findViewById(R.id.viewProfilePicture);
+       profileView.setImageBitmap(bitmap);
+
+       String fullName = user.getFullName();
+       TextView nameView = (TextView) findViewById(R.id.viewFullName);
+       nameView.setText(fullName);
+
+        String about = user.getAbout();
+        TextView viewAbout = (TextView) findViewById(R.id.viewAboutContent);
+        viewAbout.setText(about);
+
+        //format the artists
+        String artOne = user.getArtistOne();
+        String artTwo = user.getArtistTwo();
+        String artThree= user.getArtistThree();
+        String artFour = user.getArtistFour();
+        String artFive = user.getArtistFive();
+        String formatArtistsString = artOne+"\n"+artTwo+"\n"+artThree+"\n"+artFour+"\n"+artFive+"\n";
+
+        TextView artistsView = (TextView) findViewById(R.id.viewFavoriteArtistsContent);
+        artistsView.setText(formatArtistsString);
+
+        //format the genres
+        String genOne = user.getGenreOne();
+        String genTwo = user.getGenreTwo();
+        String genThree = user.getGenreThree();
+        String formatGenresString = genOne+"\n"+genTwo+"\n"+genThree+"\n";
+
+        TextView genresView = (TextView) findViewById(R.id.viewFavoriteGenreContent);
+        genresView.setText(formatGenresString);
+
     }
 
     public void openProfileEditActivity(){
