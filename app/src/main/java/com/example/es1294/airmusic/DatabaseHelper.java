@@ -26,15 +26,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_GENREONE = "genreOne";
     private static final String COLUMN_GENRETWO = "genreTwo";
     private static final String COLUMN_GENRETHREE = "genreThree";
-    private static final String COLUMN_PHOTO = "profilePhoto";
+    //private static final String COLUMN_PHOTO = "profilePhoto";
 
     SQLiteDatabase sqLiteDatabase;
 
     private static final String TABLE_CREATE = "create table users (id integer primary key AUTOINCREMENT not null , " +
             "email text not null , username text not null , password text not null , " +
             "fullName text not null , about text not null , artistOne text not null , artistTwo text not null , artistThree text not null ," +
-            " artistFour text not null , artistFive text not null , genreOne text not null , genreTwo text not null , genreThree text not null , " +
-            "profilePhoto Blob not null);";
+            " artistFour text not null , artistFive text not null , genreOne text not null , genreTwo text not null , genreThree text not null); ";
 
     public DatabaseHelper (Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -68,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_GENREONE , u.getGenreOne());
         values.put(COLUMN_GENRETWO , u.getGenreTwo());
         values.put(COLUMN_GENRETHREE , u.getGenreThree());
-        values.put(COLUMN_PHOTO , u.getProfilePhoto());
+       // values.put(COLUMN_PHOTO , u.getProfilePhoto());
 
         sqLiteDatabase.insert(TABLE_NAME ,null, values);
         sqLiteDatabase.close();
@@ -133,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         user.setGenreOne(cursor.getString(7));
         user.setGenreTwo(cursor.getString(8));
         user.setGenreThree(cursor.getString(9));
-        user.setProfilePhoto(cursor.getBlob(10));
+      //  user.setProfilePhoto(cursor.getBlob(10));
 
         cursor.close();
         return user;
@@ -151,7 +150,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String genreOne = user.getGenreOne();
         String genreTwo = user.getGenreTwo();
         String genreThree = user.getGenreThree();
-        byte[] photo = user.getProfilePhoto();
+      //  byte[] photo = user.getProfilePhoto();
 
         sqLiteDatabase = this.getWritableDatabase();
         String query = "update "+TABLE_NAME +" set " + COLUMN_FULLNAME + " = '" + fullName + "', " +
@@ -169,7 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(query);
 
         ContentValues values = new ContentValues();
-        values.put("profilePhoto", photo);
+     //   values.put("profilePhoto", photo);
         sqLiteDatabase.update(TABLE_NAME, values, "id= " + id, null);
         sqLiteDatabase.close();
     }

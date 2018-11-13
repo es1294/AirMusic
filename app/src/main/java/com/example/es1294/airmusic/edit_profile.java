@@ -31,6 +31,17 @@ public class edit_profile extends AppCompatActivity {
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
 
+    private EditText fullName;
+    private EditText about;
+    private EditText artistOne;
+    private EditText artistTwo;
+    private EditText artistThree;
+    private EditText artistFour;
+    private EditText artistFive;
+    private EditText genreOne;
+    private EditText genreTwo;
+    private EditText genreThree;
+
     DatabaseHelper helper = new DatabaseHelper(this);
 
     @Override
@@ -38,19 +49,19 @@ public class edit_profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        EditText fullName = (EditText) findViewById(R.id.profileNameInput);
-        EditText about = (EditText) findViewById(R.id.editProfileAboutMe);
-        EditText artistOne = (EditText) findViewById(R.id.editProfileArtist1);
-        EditText artistTwo = (EditText) findViewById(R.id.editProfileArtist2);
-        EditText artistThree = (EditText) findViewById(R.id.editProfileArtist3);
-        EditText artistFour = (EditText) findViewById(R.id.editProfileArtist4);
-        EditText artistFive = (EditText) findViewById(R.id.editProfileArtist5);
-        EditText genreOne = (EditText) findViewById(R.id.editProfileGenre1);
-        EditText genreTwo = (EditText) findViewById(R.id.editProfileGenre2);
-        EditText genreThree = (EditText) findViewById(R.id.editProfileGenre3);
+        fullName = (EditText) findViewById(R.id.profileNameInput);
+        about = (EditText) findViewById(R.id.editProfileAboutMe);
+        artistOne = (EditText) findViewById(R.id.editProfileArtist1);
+        artistTwo = (EditText) findViewById(R.id.editProfileArtist2);
+        artistThree = (EditText) findViewById(R.id.editProfileArtist3);
+        artistFour = (EditText) findViewById(R.id.editProfileArtist4);
+        artistFive = (EditText) findViewById(R.id.editProfileArtist5);
+        genreOne = (EditText) findViewById(R.id.editProfileGenre1);
+        genreTwo = (EditText) findViewById(R.id.editProfileGenre2);
+        genreThree = (EditText) findViewById(R.id.editProfileGenre3);
         profilePhoto = (ImageView)findViewById(R.id.editProfilePhoto);
         //get the user ID
-        ManageUser manage = new ManageUser(getApplicationContext());
+       /* ManageUser manage = new ManageUser(getApplicationContext());
         HashMap<String,String> idPair = manage.getUserId();
         String idString = idPair.get("userId");
         Integer id = Integer.parseInt(idString);
@@ -71,7 +82,7 @@ public class edit_profile extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
         profilePhoto.setImageBitmap(bitmap);
 
-
+        */
 
         chooseProfilePhotoButton = (Button) findViewById(R.id.editProfilePhotoButton);
         chooseProfilePhotoButton.setOnClickListener(new View.OnClickListener(){
@@ -86,17 +97,6 @@ public class edit_profile extends AppCompatActivity {
             @Override
             public void onClick(View v){
             //All of the following code is to update the database info
-                //Get all of the Views
-                EditText fullName = (EditText) findViewById(R.id.profileNameInput);
-                EditText about = (EditText) findViewById(R.id.editProfileAboutMe);
-                EditText artistOne = (EditText) findViewById(R.id.editProfileArtist1);
-                EditText artistTwo = (EditText) findViewById(R.id.editProfileArtist2);
-                EditText artistThree = (EditText) findViewById(R.id.editProfileArtist3);
-                EditText artistFour = (EditText) findViewById(R.id.editProfileArtist4);
-                EditText artistFive = (EditText) findViewById(R.id.editProfileArtist5);
-                EditText genreOne = (EditText) findViewById(R.id.editProfileGenre1);
-                EditText genreTwo = (EditText) findViewById(R.id.editProfileGenre2);
-                EditText genreThree = (EditText) findViewById(R.id.editProfileGenre3);
 
             //Exctract the info from the views
                 String nnameString = fullName.getText().toString();
@@ -109,7 +109,7 @@ public class edit_profile extends AppCompatActivity {
                 String ngenreOneString = genreOne.getText().toString();
                 String ngenreTwoString = genreTwo.getText().toString();
                 String ngenreThreeString = genreThree.getText().toString();
-                Drawable photoDrawable = profilePhoto.getDrawable();
+               // Drawable photoDrawable = profilePhoto.getDrawable();
             //replace apostrophe
                 String nameString = formatIntoSQL(nnameString);
                 String aboutString = formatIntoSQL(naboutString);
@@ -135,22 +135,24 @@ public class edit_profile extends AppCompatActivity {
                 user.setGenreTwo(genreTwoString);
                 user.setGenreThree(genreThreeString);
             //convert drawable into a bitmap into a byte array
-                BitmapDrawable bitmapDrawable = ((BitmapDrawable) photoDrawable);
+               /* BitmapDrawable bitmapDrawable = ((BitmapDrawable) photoDrawable);
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 //changed compress to JPEG format, with high enough quality that it looks ok
                 //this fixes the bug :)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                 byte[] photoData = stream.toByteArray();
-                user.setProfilePhoto(photoData);
+                user.setProfilePhoto(photoData);*/
 
-                //get the user ID
+               /* //get the user ID
                 ManageUser manage = new ManageUser(getApplicationContext());
                 HashMap<String,String> idPair = manage.getUserId();
                 String idString = idPair.get("userId");
                 Integer id = Integer.parseInt(idString);
                 //edit the user
-                helper.editUserEntry(user, id);
+                helper.editUserEntry(user, id);*/
+
+               //edit the user in the Firebase Realtime Database
 
               openProfileView();
             }

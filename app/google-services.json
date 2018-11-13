@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "161456035254",
+    "firebase_url": "https://air-music-bfe19.firebaseio.com",
+    "project_id": "air-music-bfe19",
+    "storage_bucket": "air-music-bfe19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161456035254:android:10abb62ef0944721",
+        "android_client_info": {
+          "package_name": "com.example.es1294.airmusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161456035254-2nkok4iq69tgld9m48hrkgkf18pjhk6f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.es1294.airmusic",
+            "certificate_hash": "34fa0f65461ff95e6a51f94a34acb7aaf1adedcc"
+          }
+        },
+        {
+          "client_id": "161456035254-u0h67dvlok4f1dsv5nbbd2phmtagumjt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnUwq7zsrk9QgX5aJ7yWNVq_lqHGiXzY0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161456035254-u0h67dvlok4f1dsv5nbbd2phmtagumjt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
