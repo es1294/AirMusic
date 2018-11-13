@@ -2,15 +2,18 @@ package com.example.es1294.airmusic;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
+/*import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.Color;*/
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+//import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +29,8 @@ public class Create_Account extends Activity {
     boolean passNumFlag = false;
     boolean emailMatchFlag = false;
     boolean emailFormatFlag = false;
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mUserRef = mRootRef.child("User");
 
 @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +61,13 @@ public class Create_Account extends Activity {
             if((userstr.length() > 7) && (userstr.length() < 13)) {
                 userLengthFlag = true;
                 //check if username has been taken already
-                if(userstr.equals(helper.doesUserExist(userstr))){
+                /*if(userstr.equals(helper.doesUserExist(userstr))){
                     userTakenFlag = false;
                     Toast userTaken = Toast.makeText(Create_Account.this, "That username is taken!", Toast.LENGTH_SHORT);
                     userTaken.show();
-                }else{
+                }else{*/
                     userTakenFlag = true;
-                }
+                //}
             }else{
                userLengthFlag = false;
                 if(userstr.length() == 0){
@@ -137,7 +142,7 @@ public class Create_Account extends Activity {
                 emailMatchFlag = true;
 
                 //use pattern matching to check for the @ symbol in the email
-                Pattern pE = Pattern.compile("[a-zA-z]+@{1}[a-zA-Z]+.?[a-zA-Z]*");
+                Pattern pE = Pattern.compile("[a-zA-z0-9]+@{1}[a-zA-Z]+.?[a-zA-Z0-9]*");
                 Matcher m3 = pE.matcher(emailstr);
                 boolean emailCheck = m3.matches();
                 if (emailCheck == false) {
@@ -162,8 +167,6 @@ public class Create_Account extends Activity {
             if(userLengthFlag && userTakenFlag && passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
                 //add to database
 
-                Toast message = Toast.makeText(Create_Account.this, "Added account to database", Toast.LENGTH_SHORT);
-                message.show();
                 User user = new User();
                 user.setUsername(userstr);
                 user.setPassword(passstr);
@@ -182,7 +185,7 @@ public class Create_Account extends Activity {
                 user.setGenreThree("Add up to three genres!");
 
                 //try to store the default pic in the database
-                Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic_png_9);
+               /* Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic_png_9);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 defaultPic.compress(Bitmap.CompressFormat.PNG, 0, stream);
@@ -190,9 +193,14 @@ public class Create_Account extends Activity {
 
                 user.setProfilePhoto(photoData);
 
-                helper.insertUser(user);
+                helper.insertUser(user);*/
+
+
 
                 //only after - return to login page
+                mUserRef.setValue(user);
+                Toast message = Toast.makeText(Create_Account.this, "Added account to firebase", Toast.LENGTH_SHORT);
+                message.show();
                 openLoginActivity();
 
             }

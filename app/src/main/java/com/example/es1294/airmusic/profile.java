@@ -32,8 +32,12 @@ public class profile extends AppCompatActivity {
     private Button profileEditButton;
     DatabaseHelper helper = new DatabaseHelper(this);
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mConditionRef = mRootRef.child("Profile");
+    DatabaseReference mUserRef = mRootRef.child("User");
+
     TextView nameView;
+    TextView viewAbout;
+    TextView artistsView;
+    TextView genresView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,41 +81,16 @@ public class profile extends AppCompatActivity {
         Toast idMessage = Toast.makeText(profile.this, "ID: "+ id, Toast.LENGTH_SHORT);
         idMessage.show();
 
-       User user = helper.getUserFromDB(id);
-
-       byte[] bytePhoto = user.getProfilePhoto();
+       /*byte[] bytePhoto = user.getProfilePhoto();
        Bitmap bitmap = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
-
+        */
        ImageView profileView = findViewById(R.id.viewProfilePicture);
-       profileView.setImageBitmap(bitmap);
+       profileView.setImageResource(R.drawable.avatarkorra);
 
-       String fullName = user.getFullName();
        nameView = (TextView) findViewById(R.id.viewFullName);
- //      nameView.setText(fullName);
-
-        String about = user.getAbout();
-        TextView viewAbout = (TextView) findViewById(R.id.viewAboutContent);
-        viewAbout.setText(about);
-
-        //format the artists
-        String artOne = user.getArtistOne();
-        String artTwo = user.getArtistTwo();
-        String artThree= user.getArtistThree();
-        String artFour = user.getArtistFour();
-        String artFive = user.getArtistFive();
-        String formatArtistsString = artOne+"\n"+artTwo+"\n"+artThree+"\n"+artFour+"\n"+artFive+"\n";
-
-        TextView artistsView = (TextView) findViewById(R.id.viewFavoriteArtistsContent);
-        artistsView.setText(formatArtistsString);
-
-        //format the genres
-        String genOne = user.getGenreOne();
-        String genTwo = user.getGenreTwo();
-        String genThree = user.getGenreThree();
-        String formatGenresString = genOne+"\n"+genTwo+"\n"+genThree+"\n";
-
-        TextView genresView = (TextView) findViewById(R.id.viewFavoriteGenreContent);
-        genresView.setText(formatGenresString);
+       viewAbout = (TextView) findViewById(R.id.viewAboutContent);
+       artistsView = (TextView) findViewById(R.id.viewFavoriteArtistsContent);
+       genresView = (TextView) findViewById(R.id.viewFavoriteGenreContent);
 
     }
 
@@ -119,11 +98,26 @@ public class profile extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        mConditionRef.addValueEventListener(new ValueEventListener() {
+        mUserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String text = dataSnapshot.getValue(String.class);
-                nameView.setText(text);
+                User user = dataSnapshot.getValue(User.class);
+                nameView.setText(user.getFullName());
+                viewAbout.setText(user.getAbout());
+                //format the artist string
+                String artOne = user.getArtistOne();
+                String artTwo = user.getArtistTwo();
+                String artThree= user.getArtistThree();
+                String artFour = user.getArtistFour();
+                String artFive = user.getArtistFive();
+                String formatArtistsString = artOne+"\n"+artTwo+"\n"+artThree+"\n"+artFour+"\n"+artFive+"\n";
+                artistsView.setText(formatArtistsString);
+                //format the genre string
+                String genOne = user.getGenreOne();
+                String genTwo = user.getGenreTwo();
+                String genThree = user.getGenreThree();
+                String formatGenresString = genOne+"\n"+genTwo+"\n"+genThree+"\n";
+                genresView.setText(formatGenresString);
             }
 
             @Override

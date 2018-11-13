@@ -3,23 +3,42 @@ package com.example.es1294.airmusic;
 import java.sql.Blob;
 
 public class User {
-    int id;
+    //int id;
     String name, email, username, password;
     String dFullName;
     String dAbout;
     String dArtist1, dArtist2, dArtist3, dArtist4, dArtist5;
     String dGenre1, dGenre2, dGenre3;
-    byte[] profilePhoto;
+   // byte[] profilePhoto;
+
+    public User(){}
+
+    public User(String name, String email, String username, String password, String dFullname, String dAbout, String dArtist1, String dArtist2, String dArtist3, String dArtist4, String dArtist5, String dGenre1, String dGenre2, String dGenre3){
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.dFullName = dFullname;
+        this.dAbout = dAbout;
+        this.dArtist1 = dArtist1;
+        this.dArtist2 = dArtist2;
+        this.dArtist3 = dArtist3;
+        this.dArtist4 = dArtist4;
+        this.dArtist5 = dArtist5;
+        this.dGenre1 = dGenre1;
+        this.dGenre2 = dGenre2;
+        this.dGenre3 = dGenre3;
+    }
 
 //getters and setters for each item
     //id
-    public void setId(int id){
+   /* public void setId(int id){
         this.id = id;
     }
     public int getId(){
         return this.id;
     }
-    //name
+    //name*/
     public void setName(String name){
         this.name = name;
     }
@@ -117,12 +136,12 @@ public class User {
     public String getGenreThree(){
         return this.dGenre3;
     }
-    public void setProfilePhoto(byte[] data){
+  /*  public void setProfilePhoto(byte[] data){
         this.profilePhoto = data;
     }
     public byte[] getProfilePhoto(){
         return this.profilePhoto;
-    }
+    }*/
 //end getters and setters
 
 
