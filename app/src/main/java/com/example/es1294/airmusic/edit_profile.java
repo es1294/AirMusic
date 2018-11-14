@@ -42,8 +42,6 @@ public class edit_profile extends AppCompatActivity {
     private EditText genreTwo;
     private EditText genreThree;
 
-    DatabaseHelper helper = new DatabaseHelper(this);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

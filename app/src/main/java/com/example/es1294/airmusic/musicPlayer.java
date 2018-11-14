@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -315,6 +318,12 @@ public class musicPlayer extends AppCompatActivity {
         else if(id == R.id.song_list){
             Intent intent= new Intent(this, ListOfSongs.class);
             startActivity(intent);
+        } else if (id == R.id.logOut) {
+            Intent intent = new Intent(this, MainActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(intent);
+            finish();
+            return false;
         }
 
         return super.onOptionsItemSelected(item);

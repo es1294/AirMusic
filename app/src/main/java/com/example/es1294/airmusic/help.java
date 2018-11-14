@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class help extends AppCompatActivity {
@@ -52,6 +54,12 @@ public class help extends AppCompatActivity {
         else if(id == R.id.song_list){
             Intent intent= new Intent(this, ListOfSongs.class);
             startActivity(intent);
+        } else if (id == R.id.logOut) {
+            Intent intent = new Intent(this, MainActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(intent);
+            finish();
+            return false;
         }
 
         return super.onOptionsItemSelected(item);

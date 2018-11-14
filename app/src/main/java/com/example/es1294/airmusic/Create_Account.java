@@ -2,26 +2,31 @@ package com.example.es1294.airmusic;
 
 import android.app.Activity;
 import android.content.Intent;
-/*import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;*/
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-//import java.io.ByteArrayOutputStream;
+import com.google.firebase.database.core.Tag;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static com.android.volley.VolleyLog.TAG;
+
 
 public class Create_Account extends Activity {
 
-    DatabaseHelper helper = new DatabaseHelper(this);
-    boolean userLengthFlag = false;
-    boolean userTakenFlag = false;
+    private static final String TAG = "Create_Account";
+
+    //Some flags used to check requirements
     boolean passLengthFlag = false;
     boolean passMatchFlag = false;
     boolean passLowFlag = false;
@@ -29,8 +34,13 @@ public class Create_Account extends Activity {
     boolean passNumFlag = false;
     boolean emailMatchFlag = false;
     boolean emailFormatFlag = false;
+
+    //Firebase references:
+    //For authentication
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    //Realtime database reference
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mUserRef = mRootRef.child("User");
+
 
 @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,52 +48,41 @@ public class Create_Account extends Activity {
         setContentView(R.layout.activity_create_account);
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //This checks if the user is already logged in - skips login page if logged in already
+        if(currentUser != null){
+            openProfile();
+        }
+    }
 
     public void onButtonClick(View v){
-        //Toast genMessage = Toast.makeText(Create_Account.this, "Button Pushed?", Toast.LENGTH_SHORT);
-        //genMessage.show();
         if(v.getId() == R.id.signin){
-            //Toast onClickMessage = Toast.makeText(Create_Account.this, "Button Pushed yes", Toast.LENGTH_SHORT);
-            //onClickMessage.show();
+            //Getting the inputs from the editTexts
             EditText username = (EditText) findViewById(R.id.username);
             EditText password = (EditText) findViewById(R.id.password);
             EditText confrimpass = (EditText) findViewById(R.id.confirmpassword);
             EditText email = (EditText) findViewById(R.id.email);
             EditText confirmem = (EditText) findViewById(R.id.confirmemail);
 
-            String userstr = username.getText().toString();
+            //Converting the inputs to strings
+            final String userstr = username.getText().toString();
             String passstr = password.getText().toString();
             String confrimpassstr = confrimpass.getText().toString();
-            String emailstr = email.getText().toString();
+            final String emailstr = email.getText().toString();
             String confirmemstr = confirmem.getText().toString();
 
-            //check username length
-            if((userstr.length() > 7) && (userstr.length() < 13)) {
-                userLengthFlag = true;
-                //check if username has been taken already
-                /*if(userstr.equals(helper.doesUserExist(userstr))){
-                    userTakenFlag = false;
-                    Toast userTaken = Toast.makeText(Create_Account.this, "That username is taken!", Toast.LENGTH_SHORT);
-                    userTaken.show();
-                }else{*/
-                    userTakenFlag = true;
-                //}
-            }else{
-               userLengthFlag = false;
-                if(userstr.length() == 0){
-                    Toast blankUser = Toast.makeText(Create_Account.this, "enter a username!", Toast.LENGTH_SHORT);
-                    blankUser.show();
-                }else {
-                    Toast userLimit = Toast.makeText(Create_Account.this, "username is too short!", Toast.LENGTH_SHORT);
-                    userLimit.show();
-                }
+            //Checking if Name field is empty
+            if(userstr.length() == 0){
+                Toast blankUser = Toast.makeText(Create_Account.this, "enter you name", Toast.LENGTH_SHORT);
+                blankUser.show();
             }
 
-            //check password match
+            //check passwords match
             if(passstr.equals(confrimpassstr)){
-                // error message
                 passMatchFlag = true;
-
                 //check password length
                 if ((passstr.length() > 7) && (passstr.length() < 13)) {
                     passLengthFlag = true;
@@ -137,6 +136,7 @@ public class Create_Account extends Activity {
                 pass.show();
             }
 
+            //Check emails match
             if(emailstr.equals(confirmemstr)){
                 // error message
                 emailMatchFlag = true;
@@ -164,51 +164,59 @@ public class Create_Account extends Activity {
             }
 
             //if all information was put in correctly, make the account!
-            if(userLengthFlag && userTakenFlag && passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
-                //add to database
+            if(passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
+                //Doing the Firebase Authentication (email password method for android)
+                mAuth.createUserWithEmailAndPassword(emailstr, passstr)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                //email is valid - continue to make the account
+                                if(task.isSuccessful()){
+                                    Log.d(TAG, "createUserWithEmail:success");
+                                    Toast success = Toast.makeText(Create_Account.this, "Account created!", Toast.LENGTH_SHORT);
+                                    success.show();
+                                    FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                User user = new User();
-                user.setUsername(userstr);
-                user.setPassword(passstr);
-                user.setEmail(emailstr);
+                                    //adding a new user to realtime database
 
-                //set default strings for profile information
-                user.setFullName("Default Name");
-                user.setAbout("Write whatever you want here!");
-                user.setArtistOne("Add an artist!");
-                user.setArtistTwo("Add another artist!");
-                user.setArtistThree("Add a third artist!");
-                user.setArtistFour("Add a fourth artist!");
-                user.setArtistFive("Add up to five artists!");
-                user.setGenreOne("Add a genre!");
-                user.setGenreTwo("Add another genre!");
-                user.setGenreThree("Add up to three genres!");
+                                    User defaultUser = new User();
+                                    defaultUser.setAuthID(currentUser.getUid());
+                                    defaultUser.setEmail(emailstr);
+                                    defaultUser.setFullName(userstr);
+                                    //set default strings for profile information
+                                    defaultUser.setAbout("Write whatever you want here!");
+                                    defaultUser.setArtistOne("Add an artist!");
+                                    defaultUser.setArtistTwo("Add another artist!");
+                                    defaultUser.setArtistThree("Add a third artist!");
+                                    defaultUser.setArtistFour("Add a fourth artist!");
+                                    defaultUser.setArtistFive("Add up to five artists!");
+                                    defaultUser.setGenreOne("Add a genre!");
+                                    defaultUser.setGenreTwo("Add another genre!");
+                                    defaultUser.setGenreThree("Add up to three genres!");
 
-                //try to store the default pic in the database
-               /* Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic_png_9);
+                                    mRootRef.child("User").push().setValue(defaultUser);
+                                    openProfile();
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                defaultPic.compress(Bitmap.CompressFormat.PNG, 0, stream);
-                byte[] photoData = stream.toByteArray();
-
-                user.setProfilePhoto(photoData);
-
-                helper.insertUser(user);*/
-
-
-
-                //only after - return to login page
-                mUserRef.setValue(user);
-                Toast message = Toast.makeText(Create_Account.this, "Added account to firebase", Toast.LENGTH_SHORT);
-                message.show();
-                openLoginActivity();
+                                }else{
+                                    //bad email, report problem to user
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(Create_Account.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
 
             }
         }
     }
 
-    public void openLoginActivity(){
+    //Not used at the moment
+  /*  public void openLoginActivity(){
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }*/
+
+    public void openProfile(){
+        Intent intent = new Intent(this, profile.class);
         startActivity(intent);
     }
 }

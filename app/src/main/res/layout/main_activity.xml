@@ -24,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:drawableLeft="@drawable/ic_action_user"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Email"
         android:inputType="textPersonName" />
 
     <EditText

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,15 +30,19 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class profile extends AppCompatActivity {
 
+    //Textviews, buttons, etc.
     private Button profileEditButton;
-    DatabaseHelper helper = new DatabaseHelper(this);
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mUserRef = mRootRef.child("User");
-
     TextView nameView;
     TextView viewAbout;
     TextView artistsView;
     TextView genresView;
+
+    //Firebase references
+    //Database
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mUserRef = mRootRef.child("User");
+    //Authentication
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +57,8 @@ public class profile extends AppCompatActivity {
             }
         });
 
+        //This part is populating the "most recently listened" horizonal scrollbar
         LinearLayout recentSongs = findViewById(R.id.recentSongs);
-
         LayoutInflater inflater = LayoutInflater.from(this);
 
         for(int i=1;i<6;i++){
@@ -68,33 +73,25 @@ public class profile extends AppCompatActivity {
             recentSongs.addView(view);
         }
 
-        //SETTING ALL VIEWS TO SHOW DATABASE INFORMATION
-       //get the id from MainActivity intent
-       /* Bundle bundle = getIntent().getExtras();
-        int id = bundle.getInt("idNumber");*/
-
-      ManageUser manage = new ManageUser(getApplicationContext());
-        HashMap<String,String> idPair = manage.getUserId();
-        String idString = idPair.get("userId");
-        Integer id = Integer.parseInt(idString);
-
-        Toast idMessage = Toast.makeText(profile.this, "ID: "+ id, Toast.LENGTH_SHORT);
-        idMessage.show();
-
-       /*byte[] bytePhoto = user.getProfilePhoto();
-       Bitmap bitmap = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
-        */
+        //Hardcoding the profile picture
        ImageView profileView = findViewById(R.id.viewProfilePicture);
        profileView.setImageResource(R.drawable.avatarkorra);
 
+       //None of this is pulling from Firebase yet - all hardcoded
        nameView = (TextView) findViewById(R.id.viewFullName);
        viewAbout = (TextView) findViewById(R.id.viewAboutContent);
        artistsView = (TextView) findViewById(R.id.viewFavoriteArtistsContent);
        genresView = (TextView) findViewById(R.id.viewFavoriteGenreContent);
+       nameView.setText("My name");
+       viewAbout.setText("about this person");
+       artistsView.setText("some artist");
+       genresView.setText("some genres");
 
     }
 
-    @Override
+    //Unused code that pulls from Firebase (not exactly how it needs to be but close)
+
+   /* @Override
     protected void onStart(){
         super.onStart();
 
@@ -125,7 +122,7 @@ public class profile extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     public void openProfileEditActivity(){
         Intent intent = new Intent(this, edit_profile.class);
@@ -171,6 +168,12 @@ public class profile extends AppCompatActivity {
             Intent intent= new Intent(this, ListOfSongs.class);
             startActivity(intent);
             finish();
+        } else if (id == R.id.logOut) {
+            Intent intent = new Intent(this, MainActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(intent);
+            finish();
+            return false;
         }
 
         return super.onOptionsItemSelected(item);

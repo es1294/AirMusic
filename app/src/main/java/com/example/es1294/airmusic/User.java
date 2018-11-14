@@ -3,21 +3,20 @@ package com.example.es1294.airmusic;
 import java.sql.Blob;
 
 public class User {
-    //int id;
-    String name, email, username, password;
+    String authID;
+    String name, email;
     String dFullName;
     String dAbout;
     String dArtist1, dArtist2, dArtist3, dArtist4, dArtist5;
     String dGenre1, dGenre2, dGenre3;
-   // byte[] profilePhoto;
 
     public User(){}
 
-    public User(String name, String email, String username, String password, String dFullname, String dAbout, String dArtist1, String dArtist2, String dArtist3, String dArtist4, String dArtist5, String dGenre1, String dGenre2, String dGenre3){
+    public User(String authID, String name, String email, String dFullname, String dAbout, String dArtist1, String dArtist2, String dArtist3, String dArtist4, String dArtist5, String dGenre1, String dGenre2, String dGenre3){
+        this.authID = authID;
         this.name = name;
         this.email = email;
-        this.username = username;
-        this.password = password;
+        //this.password = password;
         this.dFullName = dFullname;
         this.dAbout = dAbout;
         this.dArtist1 = dArtist1;
@@ -31,14 +30,14 @@ public class User {
     }
 
 //getters and setters for each item
-    //id
-   /* public void setId(int id){
-        this.id = id;
+    //authID
+    public void setAuthID(String authID){
+        this.authID = authID;
     }
-    public int getId(){
-        return this.id;
+    public String getAuthID(){
+        return this.authID;
     }
-    //name*/
+    //name
     public void setName(String name){
         this.name = name;
     }
@@ -52,20 +51,13 @@ public class User {
     public String getEmail(){
         return this.email;
     }
-    //username
-    public void setUsername(String username){
-        this.username = username;
-    }
-    public String getUsername(){
-        return this.username;
-    }
     //password
-    public void setPassword(String password){
+  /*  public void setPassword(String password){
         this.password = password;
     }
     public String getPassword(){
         return this.password;
-    }
+    }*/
     //fullName
     public void setFullName(String fullName){
         this.dFullName = fullName;
@@ -136,12 +128,6 @@ public class User {
     public String getGenreThree(){
         return this.dGenre3;
     }
-  /*  public void setProfilePhoto(byte[] data){
-        this.profilePhoto = data;
-    }
-    public byte[] getProfilePhoto(){
-        return this.profilePhoto;
-    }*/
 //end getters and setters
 
 
