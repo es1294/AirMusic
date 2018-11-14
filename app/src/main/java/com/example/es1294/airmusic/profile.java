@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,9 +31,10 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 public class profile extends AppCompatActivity {
 
     private Button profileEditButton;
-    DatabaseHelper helper = new DatabaseHelper(this);
+    //DatabaseHelper helper = new DatabaseHelper(this);
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mUserRef = mRootRef.child("User");
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     TextView nameView;
     TextView viewAbout;
@@ -73,13 +75,13 @@ public class profile extends AppCompatActivity {
        /* Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt("idNumber");*/
 
-      ManageUser manage = new ManageUser(getApplicationContext());
+    /*  ManageUser manage = new ManageUser(getApplicationContext());
         HashMap<String,String> idPair = manage.getUserId();
         String idString = idPair.get("userId");
         Integer id = Integer.parseInt(idString);
 
         Toast idMessage = Toast.makeText(profile.this, "ID: "+ id, Toast.LENGTH_SHORT);
-        idMessage.show();
+        idMessage.show();*/
 
        /*byte[] bytePhoto = user.getProfilePhoto();
        Bitmap bitmap = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
@@ -91,10 +93,14 @@ public class profile extends AppCompatActivity {
        viewAbout = (TextView) findViewById(R.id.viewAboutContent);
        artistsView = (TextView) findViewById(R.id.viewFavoriteArtistsContent);
        genresView = (TextView) findViewById(R.id.viewFavoriteGenreContent);
+       nameView.setText("My name");
+       viewAbout.setText("about this person");
+       artistsView.setText("some artist");
+       genresView.setText("some genres");
 
     }
 
-    @Override
+   /* @Override
     protected void onStart(){
         super.onStart();
 
@@ -125,7 +131,7 @@ public class profile extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     public void openProfileEditActivity(){
         Intent intent = new Intent(this, edit_profile.class);

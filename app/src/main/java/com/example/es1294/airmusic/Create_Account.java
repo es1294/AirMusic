@@ -6,18 +6,32 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;*/
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.Tag;
 
 //import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.android.volley.VolleyLog.TAG;
+
+
 public class Create_Account extends Activity {
+
+    private static final String TAG = "Create_Account";
 
     DatabaseHelper helper = new DatabaseHelper(this);
     boolean userLengthFlag = false;
@@ -29,6 +43,7 @@ public class Create_Account extends Activity {
     boolean passNumFlag = false;
     boolean emailMatchFlag = false;
     boolean emailFormatFlag = false;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mUserRef = mRootRef.child("User");
 
@@ -38,6 +53,15 @@ public class Create_Account extends Activity {
         setContentView(R.layout.activity_create_account);
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            openProfile();
+        }
+        //updateUI(currentUser);
+    }
 
     public void onButtonClick(View v){
         //Toast genMessage = Toast.makeText(Create_Account.this, "Button Pushed?", Toast.LENGTH_SHORT);
@@ -167,6 +191,49 @@ public class Create_Account extends Activity {
             if(userLengthFlag && userTakenFlag && passMatchFlag && passLengthFlag && passNumFlag && passLowFlag && passCapFlag && emailMatchFlag && emailFormatFlag){
                 //add to database
 
+                mAuth.createUserWithEmailAndPassword(emailstr, passstr)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+                                    Log.d(TAG, "createUserWithEmail:success");
+                                    Toast success = Toast.makeText(Create_Account.this, "Account created!", Toast.LENGTH_SHORT);
+                                    success.show();
+                                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                                    //add to database
+                                    mUserRef.setValue(currentUser.getUid());
+
+                                    /*User user = new User();
+                                    user.setUsername("default");
+                                    user.setPassword("default Pass");
+                                    user.setEmail("email");
+
+                                    //set default strings for profile information
+                                    user.setFullName("Default Name");
+                                    user.setAbout("Write whatever you want here!");
+                                    user.setArtistOne("Add an artist!");
+                                    user.setArtistTwo("Add another artist!");
+                                    user.setArtistThree("Add a third artist!");
+                                    user.setArtistFour("Add a fourth artist!");
+                                    user.setArtistFive("Add up to five artists!");
+                                    user.setGenreOne("Add a genre!");
+                                    user.setGenreTwo("Add another genre!");
+                                    user.setGenreThree("Add up to three genres!");*/
+
+                                }else{
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(Create_Account.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    //updateUI(null);
+                                }
+                            }
+                        });
+
+                //Add a new child of "user" to realtime db using key = userID
+
+             /*   FirebaseUser currentUser = mAuth.getCurrentUser();
+                String uID = currentUser.getUid();
+                mUserRef.setValue(uID);
+
                 User user = new User();
                 user.setUsername(userstr);
                 user.setPassword(passstr);
@@ -184,6 +251,11 @@ public class Create_Account extends Activity {
                 user.setGenreTwo("Add another genre!");
                 user.setGenreThree("Add up to three genres!");
 
+                mUserRef.child(uID).setValue(user);*/
+
+                openProfile();
+
+
                 //try to store the default pic in the database
                /* Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic_png_9);
 
@@ -198,10 +270,7 @@ public class Create_Account extends Activity {
 
 
                 //only after - return to login page
-                mUserRef.setValue(user);
-                Toast message = Toast.makeText(Create_Account.this, "Added account to firebase", Toast.LENGTH_SHORT);
-                message.show();
-                openLoginActivity();
+                //mUserRef.setValue(user)
 
             }
         }
@@ -209,6 +278,12 @@ public class Create_Account extends Activity {
 
     public void openLoginActivity(){
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openProfile(){
+        Intent intent = new Intent(this, profile.class);
+        //intent.putExtra("idNumber", id);
         startActivity(intent);
     }
 }
