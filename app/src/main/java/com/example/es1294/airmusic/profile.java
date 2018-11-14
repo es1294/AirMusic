@@ -30,16 +30,19 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class profile extends AppCompatActivity {
 
+    //Textviews, buttons, etc.
     private Button profileEditButton;
-    //DatabaseHelper helper = new DatabaseHelper(this);
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mUserRef = mRootRef.child("User");
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
     TextView nameView;
     TextView viewAbout;
     TextView artistsView;
     TextView genresView;
+
+    //Firebase references
+    //Database
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mUserRef = mRootRef.child("User");
+    //Authentication
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +57,8 @@ public class profile extends AppCompatActivity {
             }
         });
 
+        //This part is populating the "most recently listened" horizonal scrollbar
         LinearLayout recentSongs = findViewById(R.id.recentSongs);
-
         LayoutInflater inflater = LayoutInflater.from(this);
 
         for(int i=1;i<6;i++){
@@ -70,25 +73,11 @@ public class profile extends AppCompatActivity {
             recentSongs.addView(view);
         }
 
-        //SETTING ALL VIEWS TO SHOW DATABASE INFORMATION
-       //get the id from MainActivity intent
-       /* Bundle bundle = getIntent().getExtras();
-        int id = bundle.getInt("idNumber");*/
-
-    /*  ManageUser manage = new ManageUser(getApplicationContext());
-        HashMap<String,String> idPair = manage.getUserId();
-        String idString = idPair.get("userId");
-        Integer id = Integer.parseInt(idString);
-
-        Toast idMessage = Toast.makeText(profile.this, "ID: "+ id, Toast.LENGTH_SHORT);
-        idMessage.show();*/
-
-       /*byte[] bytePhoto = user.getProfilePhoto();
-       Bitmap bitmap = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
-        */
+        //Hardcoding the profile picture
        ImageView profileView = findViewById(R.id.viewProfilePicture);
        profileView.setImageResource(R.drawable.avatarkorra);
 
+       //None of this is pulling from Firebase yet - all hardcoded
        nameView = (TextView) findViewById(R.id.viewFullName);
        viewAbout = (TextView) findViewById(R.id.viewAboutContent);
        artistsView = (TextView) findViewById(R.id.viewFavoriteArtistsContent);
@@ -99,6 +88,8 @@ public class profile extends AppCompatActivity {
        genresView.setText("some genres");
 
     }
+
+    //Unused code that pulls from Firebase (not exactly how it needs to be but close)
 
    /* @Override
     protected void onStart(){
