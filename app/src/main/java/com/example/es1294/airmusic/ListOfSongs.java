@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +114,12 @@ public class ListOfSongs extends AppCompatActivity {
         else if(id == R.id.song_list){
             Intent intent= new Intent(this, ListOfSongs.class);
             startActivity(intent);
+        } else if (id == R.id.logOut) {
+            Intent intent = new Intent(this, MainActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(intent);
+            finish();
+            return false;
         }
 
         return super.onOptionsItemSelected(item);

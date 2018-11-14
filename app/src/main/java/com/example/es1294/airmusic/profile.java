@@ -177,6 +177,12 @@ public class profile extends AppCompatActivity {
             Intent intent= new Intent(this, ListOfSongs.class);
             startActivity(intent);
             finish();
+        } else if (id == R.id.logOut) {
+            Intent intent = new Intent(this, MainActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(intent);
+            finish();
+            return false;
         }
 
         return super.onOptionsItemSelected(item);

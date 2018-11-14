@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-       //updateUI(currentUser);
+        //If user is already logged in according to Firebase, skip login step
         if(currentUser != null){
             openProfile();
         }
@@ -61,59 +61,36 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //get the text inputs
                 usernameInput = (EditText) findViewById(R.id.username_editText);
                 String userstr = usernameInput.getText().toString();
                 passwordInput = (EditText) findViewById(R.id.password_editText);
                 String passstr = passwordInput.getText().toString();
 
-
-                mAuth.signInWithEmailAndPassword(userstr, passstr).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    //Add the user to the database
-                                    String id = user.getUid();
-                                    openProfile();
-                                    //updateUI(user);
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(MainActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                    //updateUI(null);
-                                }
+                if(userstr.length()==0 || passstr.length() == 0){
+                    Toast blankFail = Toast.makeText(MainActivity.this, "Enter both email and password", Toast.LENGTH_SHORT);
+                    blankFail.show();
+                }else {
+                    mAuth.signInWithEmailAndPassword(userstr, passstr).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, go to profile page
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                //Add the user to the database
+                                String id = user.getUid();
+                                openProfile();
+                                //updateUI(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast loginFail = Toast.makeText(MainActivity.this, "login failure", Toast.LENGTH_SHORT);
+                                loginFail.show();
                             }
-                        });
-
-                /*String username = helper.doesUserExist(userstr);
-                if(!userstr.equals(username)){
-                    Toast usernameExistsError = Toast.makeText(MainActivity.this, "No account with that username!" , Toast.LENGTH_SHORT);
-                    usernameExistsError.show();
-                }else if(helper.doesUserExist(userstr).equals("")){
-                    Toast blank = Toast.makeText(MainActivity.this, "Enter a username" , Toast.LENGTH_SHORT);
-                    blank.show();
-                }else{
-                    String password = helper.searchPass(userstr);
-                    if(userstr.equals(username)){
-                        if(passstr.equals(password)) {
-                            Toast loginSuccess = Toast.makeText(MainActivity.this, "Login Successful!" , Toast.LENGTH_SHORT);
-                            loginSuccess.show();
-                            Integer id = helper.getIDFromUsername(userstr);
-                            String stringID = id.toString();
-                            ManageUser manage = new ManageUser(getApplicationContext());
-                            manage.startLogin(stringID);
-                            openProfile();
-                        }else{
-                            //show popup message
-                            Toast error = Toast.makeText(MainActivity.this, "The password you entered is incorrect" , Toast.LENGTH_SHORT);
-                            error.show();
                         }
-                    }
-                }*/
-
+                    });
+                }
             }
         });
     }
