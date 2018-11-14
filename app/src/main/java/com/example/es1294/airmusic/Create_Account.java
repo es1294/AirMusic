@@ -219,6 +219,8 @@ public class Create_Account extends Activity {
                                     user.setGenreOne("Add a genre!");
                                     user.setGenreTwo("Add another genre!");
                                     user.setGenreThree("Add up to three genres!");*/
+                                    
+                                    openProfile();
 
                                 }else{
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -227,50 +229,6 @@ public class Create_Account extends Activity {
                                 }
                             }
                         });
-
-                //Add a new child of "user" to realtime db using key = userID
-
-             /*   FirebaseUser currentUser = mAuth.getCurrentUser();
-                String uID = currentUser.getUid();
-                mUserRef.setValue(uID);
-
-                User user = new User();
-                user.setUsername(userstr);
-                user.setPassword(passstr);
-                user.setEmail(emailstr);
-
-                //set default strings for profile information
-                user.setFullName("Default Name");
-                user.setAbout("Write whatever you want here!");
-                user.setArtistOne("Add an artist!");
-                user.setArtistTwo("Add another artist!");
-                user.setArtistThree("Add a third artist!");
-                user.setArtistFour("Add a fourth artist!");
-                user.setArtistFive("Add up to five artists!");
-                user.setGenreOne("Add a genre!");
-                user.setGenreTwo("Add another genre!");
-                user.setGenreThree("Add up to three genres!");
-
-                mUserRef.child(uID).setValue(user);*/
-
-                openProfile();
-
-
-                //try to store the default pic in the database
-               /* Bitmap defaultPic = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic_png_9);
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                defaultPic.compress(Bitmap.CompressFormat.PNG, 0, stream);
-                byte[] photoData = stream.toByteArray();
-
-                user.setProfilePhoto(photoData);
-
-                helper.insertUser(user);*/
-
-
-
-                //only after - return to login page
-                //mUserRef.setValue(user)
 
             }
         }
@@ -283,7 +241,6 @@ public class Create_Account extends Activity {
 
     public void openProfile(){
         Intent intent = new Intent(this, profile.class);
-        //intent.putExtra("idNumber", id);
         startActivity(intent);
     }
 }
