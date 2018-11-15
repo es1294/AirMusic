@@ -10,8 +10,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="100dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,12 +34,12 @@
                 android:id="@+id/profileNameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#C0C0C0"
                 android:ems="10"
                 android:hint="Enter your name"
                 android:inputType="textPersonName"
-                android:textColorHint="#C0C0C0"
                 android:textColor="#C0C0C0"
-                android:backgroundTint="#C0C0C0"
+                android:textColorHint="#C0C0C0"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -56,13 +57,13 @@
                 android:id="@+id/editProfileAboutMe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:maxLines="3"
-                android:hint="Write about yourself here..."
-                android:textColorHint="#C0C0C0"
-                android:textColor="#C0C0C0"
                 android:backgroundTint="#C0C0C0"
-                android:inputType="textMultiLine" />
+                android:ems="10"
+                android:hint="Write about yourself here..."
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0" />
 
             <TextView
                 android:id="@+id/editProfileArtistInput"
@@ -78,12 +79,12 @@
                 android:id="@+id/editProfileArtist1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="Enter an artist"
-                android:textColorHint="#C0C0C0"
-                android:textColor="#C0C0C0"
                 android:backgroundTint="#C0C0C0"
+                android:ems="10"
+                android:hint="Enter an artist"
+                android:inputType="textPersonName"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -91,12 +92,12 @@
                 android:id="@+id/editProfileArtist2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="#C0C0C0"
-                android:textColor="#C0C0C0"
                 android:backgroundTint="#C0C0C0"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:hint="Enter an artist"
+                android:inputType="textPersonName"
+                android:textColor="#C0C0C0"
+                android:textColorHint="#C0C0C0"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -105,11 +106,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#C0C0C0"
+                android:ems="10"
+                android:hint="Enter an artist"
+                android:inputType="textPersonName"
                 android:textColor="#C0C0C0"
                 android:textColorHint="#C0C0C0"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="Enter an artist"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -118,11 +119,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#C0C0C0"
+                android:ems="10"
+                android:hint="Enter an artist"
+                android:inputType="textPersonName"
                 android:textColor="#C0C0C0"
                 android:textColorHint="#C0C0C0"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="Enter an artist"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -131,11 +132,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#C0C0C0"
+                android:ems="10"
+                android:hint="Enter an artist"
+                android:inputType="textPersonName"
                 android:textColor="#C0C0C0"
                 android:textColorHint="#C0C0C0"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="Enter an artist"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -155,11 +156,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#C0C0C0"
+                android:ems="10"
+                android:hint="Enter a genre"
+                android:inputType="textPersonName"
                 android:textColor="#C0C0C0"
                 android:textColorHint="#C0C0C0"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="Enter a genre"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -168,11 +169,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#C0C0C0"
+                android:ems="10"
+                android:hint="Enter a genre"
+                android:inputType="textPersonName"
                 android:textColor="#C0C0C0"
                 android:textColorHint="#C0C0C0"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="Enter a genre"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -181,11 +182,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#C0C0C0"
+                android:ems="10"
+                android:hint="Enter a genre"
+                android:inputType="textPersonName"
                 android:textColor="#C0C0C0"
                 android:textColorHint="#C0C0C0"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="Enter a genre"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -195,28 +196,31 @@
                 android:layout_height="wrap_content"
                 android:text="Change Profile Photo" />
 
+            <TextView
+                android:id="@+id/pngOnlyMessage"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="*please use .png only!"
+                android:textSize="15dp"
+                android:textColor="#C0C0C0"/>
+
             <ImageView
                 android:id="@+id/editProfilePhoto"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 app:srcCompat="@drawable/default_profile_pic_png_9" />
 
+            <Button
+                android:id="@+id/saveChangesToProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:text="Save Changes"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/saveChangesToProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:text="Save Changes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-
-
 </android.support.constraint.ConstraintLayout>

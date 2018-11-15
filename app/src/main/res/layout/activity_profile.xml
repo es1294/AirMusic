@@ -10,6 +10,7 @@
         android:id="@+id/viewProfilePicture"
         android:layout_width="170dp"
         android:layout_height="170dp"
+        android:paddingRight="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -40,7 +41,7 @@
         android:layout_alignStart="@+id/viewFullName"
         android:layout_marginTop="213dp"
         android:maxLines="5"
-        android:text="About Firstname:"
+        android:text="About Me:"
         android:textColor="#C0C0C0"
         android:textSize="20sp" />
 
@@ -80,8 +81,9 @@
         android:id="@+id/viewAboutContent"
         android:layout_width="172dp"
         android:layout_height="105dp"
+        android:paddingRight="10dp"
+        android:layout_marginRight = "10dp"
         android:layout_alignStart="@+id/viewFullName"
-
         android:layout_below="@+id/viewAboutHeadline"
         android:maxLines="6"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ligula tellus, imperdiet ac, egestas "

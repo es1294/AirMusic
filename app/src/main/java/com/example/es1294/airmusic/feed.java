@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
@@ -98,6 +100,12 @@ public class feed extends AppCompatActivity {
         else if(id == R.id.song_list){
             Intent intent= new Intent(this, ListOfSongs.class);
             startActivity(intent);
+        } else if (id == R.id.logOut) {
+            Intent intent = new Intent(this, MainActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(intent);
+            finish();
+            return false;
         }
 
         return super.onOptionsItemSelected(item);
