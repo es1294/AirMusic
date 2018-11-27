@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fadeScrollbars="false"
         android:padding="10dp"
         tools:layout_editor_absoluteX="75dp"
         tools:layout_editor_absoluteY="0dp">
@@ -204,8 +205,8 @@
 
             <Button
                 android:id="@+id/saveChangesToProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:text="Save Changes"
@@ -213,6 +214,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+
         </LinearLayout>
     </ScrollView>
+
 </android.support.constraint.ConstraintLayout>
