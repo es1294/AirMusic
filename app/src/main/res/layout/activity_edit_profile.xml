@@ -196,19 +196,11 @@
                 android:layout_height="wrap_content"
                 android:text="Change Profile Photo" />
 
-            <TextView
-                android:id="@+id/pngOnlyMessage"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="*please use .png only!"
-                android:textSize="15dp"
-                android:textColor="#C0C0C0"/>
-
             <ImageView
                 android:id="@+id/editProfilePhoto"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                app:srcCompat="@drawable/default_profile_pic_png_9" />
+                app:srcCompat="@drawable/blank" />
 
             <Button
                 android:id="@+id/saveChangesToProfile"
