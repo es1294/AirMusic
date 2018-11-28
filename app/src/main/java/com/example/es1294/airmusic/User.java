@@ -4,29 +4,31 @@ import java.sql.Blob;
 
 public class User {
     String authID;
-    String name, email;
-    String dFullName;
-    String dAbout;
-    String dArtist1, dArtist2, dArtist3, dArtist4, dArtist5;
-    String dGenre1, dGenre2, dGenre3;
+    String email;
+    String FullName;
+    String About;
+    String Artist1, Artist2, Artist3, Artist4, Artist5;
+    String Genre1, Genre2, Genre3;
+    String profilePhotoStorageName;
 
     public User(){}
 
-    public User(String authID, String name, String email, String dFullname, String dAbout, String dArtist1, String dArtist2, String dArtist3, String dArtist4, String dArtist5, String dGenre1, String dGenre2, String dGenre3){
+    public User(String authID, String email, String Fullname, String About, String Artist1, String Artist2, String Artist3, String Artist4, String Artist5, String Genre1, String Genre2, String Genre3, String photoName){
         this.authID = authID;
-        this.name = name;
         this.email = email;
         //this.password = password;
-        this.dFullName = dFullname;
-        this.dAbout = dAbout;
-        this.dArtist1 = dArtist1;
-        this.dArtist2 = dArtist2;
-        this.dArtist3 = dArtist3;
-        this.dArtist4 = dArtist4;
-        this.dArtist5 = dArtist5;
-        this.dGenre1 = dGenre1;
-        this.dGenre2 = dGenre2;
-        this.dGenre3 = dGenre3;
+        this.FullName = Fullname;
+        this.About = About;
+        this.Artist1 = Artist1;
+        this.Artist2 = Artist2;
+        this.Artist3 = Artist3;
+        this.Artist4 = Artist4;
+        this.Artist5 = Artist5;
+        this.Genre1 = Genre1;
+        this.Genre2 = Genre2;
+        this.Genre3 = Genre3;
+        this.profilePhotoStorageName = photoName;
+        //this.profilePhotoStorageName = profilePhotoStorageName;
     }
 
 //getters and setters for each item
@@ -37,13 +39,6 @@ public class User {
     public String getAuthID(){
         return this.authID;
     }
-    //name
-    public void setName(String name){
-        this.name = name;
-    }
-    public String getName(){
-        return this.name;
-    }
     //email
     public void setEmail(String email){
         this.email = email;
@@ -51,84 +46,82 @@ public class User {
     public String getEmail(){
         return this.email;
     }
-    //password
-  /*  public void setPassword(String password){
-        this.password = password;
-    }
-    public String getPassword(){
-        return this.password;
-    }*/
     //fullName
     public void setFullName(String fullName){
-        this.dFullName = fullName;
+        this.FullName = fullName;
     }
     public String getFullName(){
-        return this.dFullName;
+        return this.FullName;
     }
     //about
     public void setAbout(String about){
-        this.dAbout = about;
+        this.About = about;
     }
     public String getAbout(){
-        return this.dAbout;
+        return this.About;
     }
     //artist1
     public void setArtistOne(String artist1){
-        this.dArtist1 = artist1;
+        this.Artist1 = artist1;
     }
     public String getArtistOne(){
-        return this.dArtist1;
+        return this.Artist1;
     }
     //artist2
     public void setArtistTwo(String artist2){
-        this.dArtist2 = artist2;
+        this.Artist2 = artist2;
     }
     public String getArtistTwo(){
-        return this.dArtist2;
+        return this.Artist2;
     }
     //artist3
     public void setArtistThree(String artist3){
-        this.dArtist3 = artist3;
+        this.Artist3 = artist3;
     }
     public String getArtistThree(){
-        return this.dArtist3;
+        return this.Artist3;
     }
     //artist4
     public void setArtistFour(String artist4){
-        this.dArtist4 = artist4;
+        this.Artist4 = artist4;
     }
     public String getArtistFour(){
-        return this.dArtist4;
+        return this.Artist4;
     }
     //artist5
     public void setArtistFive(String artist5){
-        this.dArtist5 = artist5;
+        this.Artist5 = artist5;
     }
     public String getArtistFive(){
-        return this.dArtist5;
+        return this.Artist5;
     }
     //genre1
     public void setGenreOne(String genre1){
-        this.dGenre1 = genre1;
+        this.Genre1 = genre1;
     }
     public String getGenreOne(){
-        return this.dGenre1;
+        return this.Genre1;
     }
     //genre2
     public void setGenreTwo(String genre2){
-        this.dGenre2 = genre2;
+        this.Genre2 = genre2;
     }
     public String getGenreTwo(){
-        return this.dGenre2;
+        return this.Genre2;
     }
     //genre3
     public void setGenreThree(String genre3){
-        this.dGenre3 = genre3;
+        this.Genre3 = genre3;
     }
     public String getGenreThree(){
-        return this.dGenre3;
+        return this.Genre3;
+    }
+    //profile name in storage
+    public void setProfilePhotoStorageName(String profilePhotoStorageName){
+        this.profilePhotoStorageName = profilePhotoStorageName;
+    }
+    public String getProfilePhotoStorageName(){
+        return this.profilePhotoStorageName;
     }
 //end getters and setters
-
-
 }
