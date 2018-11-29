@@ -138,7 +138,7 @@ public class edit_profile extends AppCompatActivity {
                     fullName.setText(u.getFullName());
                     about.setText(u.getAbout());
                     artistOne.setText(u.getArtistOne());
-                    artistTwo.setText(u.getArtistThree());
+                    artistTwo.setText(u.getArtistTwo());
                     artistThree.setText(u.getArtistThree());
                     artistFour.setText(u.getArtistFour());
                     artistFive.setText(u.getArtistFive());
