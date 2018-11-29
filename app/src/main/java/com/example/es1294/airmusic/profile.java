@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,15 +42,21 @@ public class profile extends AppCompatActivity {
     TextView viewAbout;
     TextView artistsView;
     TextView genresView;
+    ImageView profileView;
 
     //Firebase references
     //Database
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mUserRef = mRootRef.child("User");
+    //reference to firebase storage
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    //Storage
+    private StorageReference storageRef = storage.getReference();
     //Authentication
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser;
     private String userID;
+
     //current user object
     private User u;
 
@@ -59,8 +67,8 @@ public class profile extends AppCompatActivity {
 
 
         //Hardcoding the profile picture
-        ImageView profileView = findViewById(R.id.viewProfilePicture);
-        profileView.setImageResource(R.drawable.avatarkorra);
+        profileView = findViewById(R.id.viewProfilePicture);
+        //profileView.setImageResource(R.drawable.avatarkorra);
 
         //linking the textviews
         nameView = (TextView) findViewById(R.id.viewFullName);
@@ -121,6 +129,24 @@ public class profile extends AppCompatActivity {
                     artistsView.setText(artistString);
                     String genresString = u.getGenreOne() + "\n" + u.getGenreTwo() + "\n" + u.getGenreThree();
                     genresView.setText(genresString);
+
+                    StorageReference pathReference = storageRef.child("images/" + u.getProfilePhotoStorageName());
+                    final long ONE_MEGABYTE = 1024 * 1024;
+                    pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            // Data for "images/island.jpg" is returns, use this as needed
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            profileView.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+
+                        }
+                    });
+
                 }
             }
 
