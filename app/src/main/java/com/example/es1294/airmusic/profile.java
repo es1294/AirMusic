@@ -17,12 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -39,21 +42,45 @@ public class profile extends AppCompatActivity {
     TextView viewAbout;
     TextView artistsView;
     TextView genresView;
+    ImageView profileView;
 
     //Firebase references
     //Database
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mUserRef = mRootRef.child("User");
+    //reference to firebase storage
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    //Storage
+    private StorageReference storageRef = storage.getReference();
     //Authentication
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser;
     private String userID;
+
+    //current user object
+    private User u;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
+        //Hardcoding the profile picture
+        profileView = findViewById(R.id.viewProfilePicture);
+        //profileView.setImageResource(R.drawable.avatarkorra);
+
+        //linking the textviews
+        nameView = (TextView) findViewById(R.id.viewFullName);
+        viewAbout = (TextView) findViewById(R.id.viewAboutContent);
+        artistsView = (TextView) findViewById(R.id.viewFavoriteArtistsContent);
+        genresView = (TextView) findViewById(R.id.viewFavoriteGenreContent);
+
+        //Find the user we need to edit by their userID
+        currentUser = mAuth.getCurrentUser();
+        userID = currentUser.getUid();
+
+        //listener for the edit button
         profileEditButton = (Button) findViewById(R.id.profileEditButton);
         profileEditButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,7 +90,7 @@ public class profile extends AppCompatActivity {
         });
 
         //This part is populating the "most recently listened" horizonal scrollbar
-        LinearLayout recentSongs = findViewById(R.id.recentSongs);
+        /*LinearLayout recentSongs = findViewById(R.id.recentSongs);
         LayoutInflater inflater = LayoutInflater.from(this);
 
         for(int i=1;i<6;i++){
@@ -76,50 +103,51 @@ public class profile extends AppCompatActivity {
             imageView.setImageResource(R.drawable.default_note);
 
             recentSongs.addView(view);
-        }
-
-        //Hardcoding the profile picture
-       ImageView profileView = findViewById(R.id.viewProfilePicture);
-       profileView.setImageResource(R.drawable.avatarkorra);
-
-       //None of this is pulling from Firebase yet - all hardcoded
-       nameView = (TextView) findViewById(R.id.viewFullName);
-       viewAbout = (TextView) findViewById(R.id.viewAboutContent);
-       artistsView = (TextView) findViewById(R.id.viewFavoriteArtistsContent);
-       genresView = (TextView) findViewById(R.id.viewFavoriteGenreContent);
-       nameView.setText("My name");
-       viewAbout.setText("about this person");
-       artistsView.setText("some artist");
-       genresView.setText("some genres");
-
+        }*/
+        //done populating the horizontal list
     }
 
-    //Unused code that pulls from Firebase (not exactly how it needs to be but close)
 
-   /* @Override
+    @Override
     protected void onStart(){
         super.onStart();
 
-        mUserRef.addValueEventListener(new ValueEventListener() {
+        //Pull the user information from the database to auto-fill the fields
+        //Write a query to get the user from the db
+        Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+        //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+        getUserNotEdited.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                nameView.setText(user.getFullName());
-                viewAbout.setText(user.getAbout());
-                //format the artist string
-                String artOne = user.getArtistOne();
-                String artTwo = user.getArtistTwo();
-                String artThree= user.getArtistThree();
-                String artFour = user.getArtistFour();
-                String artFive = user.getArtistFive();
-                String formatArtistsString = artOne+"\n"+artTwo+"\n"+artThree+"\n"+artFour+"\n"+artFive+"\n";
-                artistsView.setText(formatArtistsString);
-                //format the genre string
-                String genOne = user.getGenreOne();
-                String genTwo = user.getGenreTwo();
-                String genThree = user.getGenreThree();
-                String formatGenresString = genOne+"\n"+genTwo+"\n"+genThree+"\n";
-                genresView.setText(formatGenresString);
+                for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                    //get the current user object and fill the edittexts with its info
+                    u = userSnapShot.getValue(User.class);
+                    nameView.setText(u.getFullName());
+                    viewAbout.setText(u.getAbout());
+                    //Format the artist string
+                    String artistString = u.getArtistOne() + "\n" + u.getArtistTwo() + "\n" +  u.getArtistThree() + "\n" +  u.getArtistFour() + "\n" + u.getArtistFive();
+                    artistsView.setText(artistString);
+                    String genresString = u.getGenreOne() + "\n" + u.getGenreTwo() + "\n" + u.getGenreThree();
+                    genresView.setText(genresString);
+
+                    StorageReference pathReference = storageRef.child("images/" + u.getProfilePhotoStorageName());
+                    final long ONE_MEGABYTE = 1024 * 1024;
+                    pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            // Data for "images/island.jpg" is returns, use this as needed
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            profileView.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+
+                        }
+                    });
+
+                }
             }
 
             @Override
@@ -127,7 +155,7 @@ public class profile extends AppCompatActivity {
 
             }
         });
-    }*/
+    }
 
     public void openProfileEditActivity(){
         Intent intent = new Intent(this, edit_profile.class);

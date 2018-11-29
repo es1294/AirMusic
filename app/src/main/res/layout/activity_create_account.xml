@@ -74,7 +74,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints=""
-        android:maxLength="12"
         android:ems="10"
         android:inputType="text|textPersonName"
         android:textColorHint="#C0C0C0"

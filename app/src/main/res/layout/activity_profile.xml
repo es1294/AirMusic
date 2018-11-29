@@ -1,147 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity"
     android:layout_width="match_parent"
     android:background="@drawable/app_background2"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".profile">
 
-    <ImageView
-        android:id="@+id/viewProfilePicture"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:paddingRight="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="35dp"
-        android:src ="@drawable/default_profile_pic_png_9" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-    <TextView
-        android:id="@+id/viewFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:text="Firstname Lastname"
-        android:textColor="#C0C0C0"
-        android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/viewAboutHeadline"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/viewFullName"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/viewFullName"
-        android:layout_marginTop="213dp"
-        android:maxLines="5"
-        android:text="About Me:"
-        android:textColor="#C0C0C0"
-        android:textSize="20sp" />
-
-    <HorizontalScrollView
-        android:layout_width="360dp"
-        android:layout_height="84dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="21dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:scrollbars="none">
+        android:layout_marginBottom="75dp"
+        android:fadeScrollbars="false"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
-            android:id="@+id/recentSongs"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/viewFavoriteArtistHeadline"
-        android:layout_width="172dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/viewFullName"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:maxLines="6"
-        android:text="Favorite Artists"
-        android:textColor="#C0C0C0"
-        android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/viewAboutContent"
-        android:layout_width="172dp"
-        android:layout_height="105dp"
-        android:paddingRight="10dp"
-        android:layout_marginRight = "10dp"
-        android:layout_alignStart="@+id/viewFullName"
-        android:layout_below="@+id/viewAboutHeadline"
-        android:maxLines="6"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ligula tellus, imperdiet ac, egestas "
-        android:textColor="#C0C0C0" />
+        <TextView
+            android:id="@+id/viewFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:text="Firstname Lastname"
+            android:textColor="#C0C0C0"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/viewFavoriteArtistsContent"
-        android:layout_width="171dp"
-        android:layout_height="133dp"
-        android:layout_alignLeft="@+id/viewFavoriteArtistHeadline"
-        android:layout_alignStart="@+id/viewFavoriteArtistHeadline"
-        android:layout_below="@+id/viewFavoriteArtistHeadline"
-        android:text="Artist 1\nArtist 2\nArtist 3\nArtist 4\nArtist 5\n"
-        android:textColor="#C0C0C0"
-        android:textSize="15dp" />
+        <ImageView
+            android:id="@+id/viewProfilePicture"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:src ="@drawable/default_profile_pic_png_9" />
 
-    <TextView
-        android:id="@+id/viewFavoriteGenresHeadline"
-        android:layout_width="171dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/viewAboutHeadline"
-        android:layout_alignLeft="@+id/viewFavoriteArtistHeadline"
-        android:layout_alignStart="@+id/viewFavoriteArtistHeadline"
-        android:text="Favorite Genres"
-        android:textColor="#C0C0C0"
-        android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/viewFavoriteGenreContent"
-        android:layout_width="169dp"
-        android:layout_height="105dp"
-        android:layout_alignLeft="@+id/viewFavoriteArtistHeadline"
-        android:layout_alignStart="@+id/viewFavoriteArtistHeadline"
-        android:layout_alignTop="@+id/viewAboutContent"
-        android:text="Genre 1\nGenre 2\nGenre 3\n"
-        android:textColor="#C0C0C0"
-        android:textSize="15dp" />
+            <TextView
+            android:id="@+id/viewAboutHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+            android:maxLines="5"
+            android:text="About Me:"
+            android:textColor="#C0C0C0"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/viewRecentSongsHeadline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/viewFullName"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/viewFullName"
-        android:layout_marginBottom="110dp"
-        android:text="Recently Listened Songs:"
-        android:textColor="#C0C0C0"
-        android:textSize="20dp" />
+        <!--<HorizontalScrollView
+            android:layout_width="360dp"
+            android:layout_height="84dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="21dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/recentSongs"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>-->
+
+
+
+        <TextView
+            android:id="@+id/viewAboutContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="6"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ligula tellus, imperdiet ac, egestas "
+            android:textColor="#C0C0C0" />
+
+        <TextView
+            android:id="@+id/viewFavoriteArtistHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="6"
+            android:layout_gravity="center_horizontal"
+            android:text="Favorite Artists"
+            android:textColor="#C0C0C0"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/viewFavoriteArtistsContent"
+            android:layout_width="match_parent"
+            android:layout_height="133dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Artist 1\nArtist 2\nArtist 3\nArtist 4\nArtist 5\n"
+            android:textColor="#C0C0C0"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/viewFavoriteGenresHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Favorite Genres"
+            android:textColor="#C0C0C0"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/viewFavoriteGenreContent"
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Genre 1\nGenre 2\nGenre 3\n"
+            android:textColor="#C0C0C0"
+            android:textSize="15dp" />
+
+        <!--<TextView
+            android:id="@+id/viewRecentSongsHeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/viewFullName"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/viewFullName"
+            android:layout_marginBottom="110dp"
+            android:text="Recently Listened Songs:"
+            android:textColor="#C0C0C0"
+            android:textSize="20dp" />-->
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/profileEditButton"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_alignRight="@+id/viewFavoriteArtistHeadline"
-        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
         android:text="Edit Profile"
-        android:textSize="10dp"/>
+        android:textSize="15dp"/>
 
 
 </RelativeLayout>
