@@ -90,7 +90,7 @@ public class profile extends AppCompatActivity {
         });
 
         //This part is populating the "most recently listened" horizonal scrollbar
-        LinearLayout recentSongs = findViewById(R.id.recentSongs);
+        /*LinearLayout recentSongs = findViewById(R.id.recentSongs);
         LayoutInflater inflater = LayoutInflater.from(this);
 
         for(int i=1;i<6;i++){
@@ -103,7 +103,7 @@ public class profile extends AppCompatActivity {
             imageView.setImageResource(R.drawable.default_note);
 
             recentSongs.addView(view);
-        }
+        }*/
         //done populating the horizontal list
     }
 
