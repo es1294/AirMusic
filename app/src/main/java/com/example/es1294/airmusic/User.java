@@ -10,10 +10,11 @@ public class User {
     String Artist1, Artist2, Artist3, Artist4, Artist5;
     String Genre1, Genre2, Genre3;
     String profilePhotoStorageName;
+    int currentSong;
 
     public User(){}
 
-    public User(String authID, String email, String Fullname, String About, String Artist1, String Artist2, String Artist3, String Artist4, String Artist5, String Genre1, String Genre2, String Genre3, String photoName){
+    public User(String authID, String email, String Fullname, String About, String Artist1, String Artist2, String Artist3, String Artist4, String Artist5, String Genre1, String Genre2, String Genre3, String photoName, int currentSong){
         this.authID = authID;
         this.email = email;
         //this.password = password;
@@ -28,6 +29,7 @@ public class User {
         this.Genre2 = Genre2;
         this.Genre3 = Genre3;
         this.profilePhotoStorageName = photoName;
+        this.currentSong = currentSong;
         //this.profilePhotoStorageName = profilePhotoStorageName;
     }
 
@@ -122,6 +124,13 @@ public class User {
     }
     public String getProfilePhotoStorageName(){
         return this.profilePhotoStorageName;
+    }
+    //currentSong
+    public void setCurrentSong(int currentSong){
+        this.currentSong = currentSong;
+    }
+    public int getCurrentSong(){
+        return this.currentSong;
     }
 //end getters and setters
 }

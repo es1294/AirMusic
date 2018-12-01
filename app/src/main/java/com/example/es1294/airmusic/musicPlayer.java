@@ -1,11 +1,14 @@
 package com.example.es1294.airmusic;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +19,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,9 +51,23 @@ public class musicPlayer extends AppCompatActivity {
     TextView remaining_time;    //text that shows the remaining time on the song
     MediaPlayer mediaPlayer;    //object that plays the music
     int total_time; //sets the max of the song so we don't scroll pass the actual playing time of the song
+    private FirebaseUser currentUser; //The current user signed in to the app
+    private String userID; //Unique key of signed in user
+    private User u; //user object for current user
+    private int currentPosition;
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();  //reference to authenticator
+    private DatabaseReference mRootRef  = FirebaseDatabase.getInstance().getReference();; //reference to root of database
+    private DatabaseReference mCurrentSongRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Find the currently logged in user
+        currentUser = mAuth.getCurrentUser();
+        userID = currentUser.getUid();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music_player_activity);
 
@@ -165,9 +192,37 @@ public class musicPlayer extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        //Pull the user information from the database to auto-fill the fields
+        //Write a query to get the user from the db
+        Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+        //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+        getUserNotEdited.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                    //get the current user object and fill the edittexts with its info
+                    u = userSnapShot.getValue(User.class);
+                    u.setCurrentSong(resID);
+                    //store the new user in the db
+                    DatabaseReference editThisUser = userSnapShot.getRef();
+                    editThisUser.setValue(u);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private Handler handler = new Handler(){
         public void handleMessage( Message msg){
-            int currentPosition = msg.what;
+            currentPosition = msg.what;
 
             //update position bar
 
@@ -227,12 +282,52 @@ public class musicPlayer extends AppCompatActivity {
                 mediaPlayer = mediaPlayer.create(this,resID);
                 setConfigs();
                 mediaPlayer.start();
+                Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+                //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+                getUserNotEdited.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                            //get the current user object and fill the edittexts with its info
+                            u = userSnapShot.getValue(User.class);
+                            u.setCurrentSong(resID);
+                            //store the new user in the db
+                            DatabaseReference editThisUser = userSnapShot.getRef();
+                            editThisUser.setValue(u);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
             else{
                 resID = allSongIDs.get(currentSong +1);
                 mediaPlayer = mediaPlayer.create(this,resID);
                 setConfigs();
                 mediaPlayer.start();
+                Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+                //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+                getUserNotEdited.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                            //get the current user object and fill the edittexts with its info
+                            u = userSnapShot.getValue(User.class);
+                            u.setCurrentSong(resID);
+                            //store the new user in the db
+                            DatabaseReference editThisUser = userSnapShot.getRef();
+                            editThisUser.setValue(u);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
 
     }
@@ -248,12 +343,52 @@ public class musicPlayer extends AppCompatActivity {
             mediaPlayer = mediaPlayer.create(this,resID);
             setConfigs();
             mediaPlayer.start();
+            Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+            //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+            getUserNotEdited.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                        //get the current user object and fill the edittexts with its info
+                        u = userSnapShot.getValue(User.class);
+                        u.setCurrentSong(resID);
+                        //store the new user in the db
+                        DatabaseReference editThisUser = userSnapShot.getRef();
+                        editThisUser.setValue(u);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
         else{
             resID = allSongIDs.get(currentSong -1);
             mediaPlayer = mediaPlayer.create(this,resID);
             setConfigs();
             mediaPlayer.start();
+            Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+            //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+            getUserNotEdited.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                        //get the current user object and fill the edittexts with its info
+                        u = userSnapShot.getValue(User.class);
+                        u.setCurrentSong(resID);
+                        //store the new user in the db
+                        DatabaseReference editThisUser = userSnapShot.getRef();
+                        editThisUser.setValue(u);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
 
@@ -280,6 +415,38 @@ public class musicPlayer extends AppCompatActivity {
         super.onDestroy();
         stopPlaying();
     }
+
+
+    /*protected void onStart(){
+        super.onStart();
+
+        //Pull the user information from the database to auto-fill the fields
+        //Write a query to get the user from the db
+        final Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+        //continually check for change
+        getUserNotEdited.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                    //get the current user object and fill the edittexts with its info
+                    u = dataSnapshot.getValue(User.class);
+                    u.setCurrentSong(resID);
+
+                    DatabaseReference editThisUser = userSnapShot.getRef();
+                    editThisUser.setValue(u);
+                    *//*mCurrentSongRef = editThisUser.child("currentSong").child("timeStamp");
+                    mCurrentSongRef.setValue(currentPosition);*//*
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }*/
+
 
     //for all classes in menu, this makes the dropdown menu available
 

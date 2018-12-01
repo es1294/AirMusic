@@ -194,6 +194,8 @@ public class Create_Account extends Activity {
                                     defaultUser.setGenreTwo("Add another genre!");
                                     defaultUser.setGenreThree("Add up to three genres!");
                                     defaultUser.setProfilePhotoStorageName("defaultphoto.png");
+                                    int i = 0;
+                                    defaultUser.setCurrentSong(i);
                                     mRootRef.child("User").push().setValue(defaultUser);
                                     openProfile();
 
