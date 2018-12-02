@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    android:orientation="vertical"
+    android:background="@drawable/app_background2"
+    tools:context="com.example.es1294.airmusic.ListOfDevices">
+
+    <Button
+        android:id="@+id/show_discovered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Discover" />
+
+    <ListView
+        android:id="@+id/discovered_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

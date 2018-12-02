@@ -32,10 +32,10 @@ dependencies {
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.android.volley:volley:1.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-dynamic-links:16.0.4'
+    implementation 'com.google.firebase:firebase-invites:16.0.4'
     implementation 'com.google.firebase:firebase-database:16.0.4'
-    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.google.firebase:firebase-auth:16.0.4'
     implementation 'com.google.firebase:firebase-storage:16.0.4'
-
-
 }
 apply plugin: 'com.google.gms.google-services'
