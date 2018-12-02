@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ValueEventListener;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -38,15 +39,15 @@ public class Feed_List_Adapter extends ArrayAdapter<Friends> {
      */
     private static class ViewHolder {
         TextView name;
-        TextView songName;
-        TextView artisit;
-        ImageView image;
+        //TextView songName;
+        //TextView artisit;
+        //ImageView image;
     }
 
 
     public Feed_List_Adapter(Context context, int resource, ArrayList<Friends> objects) {
-        super(context, resource, objects);
-        mContext = context;
+        super((Context) context, resource, objects);
+        mContext = (Context) context;
         mResource = resource;
     }
 
@@ -59,9 +60,7 @@ public class Feed_List_Adapter extends ArrayAdapter<Friends> {
 
         //get the persons information
         String name = getItem(position).getName();
-        String songName = getItem(position).getSongName();
-        String artist = getItem(position).getArtist();
-        String imgUrl = getItem(position).getImageUrl();
+       // String imgUrl = getItem(position).getImageUrl();
 
         //create the view result for showing the animation
         final View result;
@@ -75,9 +74,9 @@ public class Feed_List_Adapter extends ArrayAdapter<Friends> {
             convertView = inflater.inflate(mResource, parent, false);
             holder= new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.textView1);
-            holder.songName = (TextView) convertView.findViewById(R.id.textView2);
-            holder.artisit = (TextView) convertView.findViewById(R.id.textView3);
-            holder.image = (ImageView) convertView.findViewById(R.id.image);
+           // holder.songName = (TextView) convertView.findViewById(R.id.textView2);
+            //holder.artisit = (TextView) convertView.findViewById(R.id.textView3);
+            //holder.image = (ImageView) convertView.findViewById(R.id.image);
 
             result = convertView;
 
@@ -95,14 +94,11 @@ public class Feed_List_Adapter extends ArrayAdapter<Friends> {
         lastPosition = position;
 
         holder.name.setText(name);
-        holder.songName.setText(songName);
-        holder.artisit .setText(artist);
 
         //create the imageloader object
-        ImageLoader imageLoader = ImageLoader.getInstance();
+       /* ImageLoader imageLoader = ImageLoader.getInstance();
 
         int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed",null,mContext.getPackageName());
-
         //create display options
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
                 .cacheOnDisc(true).resetViewBeforeLoading(true)
@@ -112,7 +108,7 @@ public class Feed_List_Adapter extends ArrayAdapter<Friends> {
 
         //download and display image from url
         imageLoader.displayImage(imgUrl, holder.image, options);
-
+*/
         return convertView;
     }
 
