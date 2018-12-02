@@ -2,6 +2,8 @@ package com.example.es1294.airmusic;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,10 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -30,13 +34,24 @@ public class ListOfSongs extends AppCompatActivity {
     ListView listSongs;     //listSongs is the container that will list all songs in UI
     List<String> list;      //list is an array that will store the name of the mp3 files
     ListAdapter adapter;
+    FloatingActionButton shareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_songs);
+        shareButton = findViewById(R.id.shareButton);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            String  link = "https://firebasestorage.googleapis.com/v0/b/air-music-bfe19.appspot.com/o/music%2Ftalamak.mp3?alt=media&token=078192f0-e813-4818-8107-517b240a25c0";
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "Try this awesome song!" + link);
+                startActivity(Intent.createChooser(intent, "Share Using"));
 
-
+            }
+        });
         listSongs = (ListView) findViewById(R.id.song_list);
         list = new ArrayList<>();
 
@@ -123,5 +138,19 @@ public class ListOfSongs extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void onBoardSharing(final ShortDynamicLink link){
+        shareButton = findViewById(R.id.shareButton);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "Try this awesome song!" + link.getShortLink());
+                startActivity(Intent.createChooser(intent, "Share Using"));
+
+            }
+        });
+
     }
 }
