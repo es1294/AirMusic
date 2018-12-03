@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+import static com.example.es1294.airmusic.ListOfSongs.EXTRA_ID;
 
 
 public class feed extends AppCompatActivity {
@@ -38,35 +40,22 @@ public class feed extends AppCompatActivity {
     private ArrayList<Friends> array = new ArrayList<>();
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     User u;
+    //Authentication
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser;
+    private String userID;
+
+    private int feedSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        /*Friends a = new Friends("Cloud", "Radioactive", "Imagine Dragons");
-        Friends b = new Friends("Dovahkin", "Sovngarde", "Jermey Soule");
-        Friends c = new Friends("Lara Croft", "Cherry Bomb", "The Runaways");
-        Friends d = new Friends("Thor ", "Immigrant Song", "Led Zeppelin");
-        Friends e = new Friends("Iron man", "Highway to Hell", "AC/DC");
-        Friends f = new Friends("Loki ", "Bitch Better Have My Money", "Rhianna");
-        Friends g = new Friends("Daenerys", "Queen", "Janelle Monae");
-        Friends h = new Friends("Avatar Korra", "Turn It Down For What", "DJ Snake, Lil Jon");
-        Friends i = new Friends("Hella", "Chun - Li", "Nicki Minaj");
-        Friends j = new Friends("Terry Mcginnis", "Batman Beyond Theme", "Kristopher Carter");
-        Friends k = new Friends("Defenders", "We Will Rock You", "Queen");
+        //find the current user
+        currentUser = mAuth.getCurrentUser();
+        userID = currentUser.getUid();
 
-        array.add(a);
-        array.add(b);
-        array.add(c);
-        array.add(d);
-        array.add(e);
-        array.add(f);
-        array.add(g);
-        array.add(h);
-        array.add(i);
-        array.add(j);
-        array.add(k);*/
         Query getUserNotEdited = mRootRef.child("User");
         //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
         getUserNotEdited.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,6 +75,7 @@ public class feed extends AppCompatActivity {
 
             }
         });
+
         ListView list = findViewById(R.id.feed_view);
         Feed_List_Adapter adapter = new Feed_List_Adapter(this, R.layout.adapter_view_layout, array);
         list.setAdapter(adapter);
@@ -94,9 +84,58 @@ public class feed extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d("feed","onItemClick: array " + array.get(i).getName());
                 Toast.makeText(feed.this, "You clicked on: " + array.get(i).getName(), Toast.LENGTH_SHORT).show();
+                String clickedUser = array.get(i).getName();
+                //Get the song the other user is listening to
+                Query getClickedUserSong = mRootRef.child("User").orderByChild("fullName").equalTo(clickedUser);
+                //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+                getClickedUserSong.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                            u = userSnapShot.getValue(User.class);
+                            feedSong = u.getCurrentSong();
+                            openMusicPlayer(feedSong);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                //Set the current user song to the clicked user
+               /* Query setCurrentSong = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+                //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+                setCurrentSong.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                            //get the current user object and fill the edittexts with its info
+                            u = userSnapShot.getValue(User.class);
+                            u.setCurrentSong(feedSong);
+                            DatabaseReference editThisUser = userSnapShot.getRef();
+                            editThisUser.setValue(u);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });*/
+
             }
         });
 
+    }
+
+    public void openMusicPlayer(int resID){
+
+        Intent intent = new Intent(this, musicPlayer.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(EXTRA_ID, resID);
+        startActivity(intent);
+        finish();
     }
 
 

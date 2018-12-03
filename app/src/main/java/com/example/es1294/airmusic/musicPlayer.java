@@ -416,38 +416,6 @@ public class musicPlayer extends AppCompatActivity {
         stopPlaying();
     }
 
-
-    /*protected void onStart(){
-        super.onStart();
-
-        //Pull the user information from the database to auto-fill the fields
-        //Write a query to get the user from the db
-        final Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
-        //continually check for change
-        getUserNotEdited.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
-                    //get the current user object and fill the edittexts with its info
-                    u = dataSnapshot.getValue(User.class);
-                    u.setCurrentSong(resID);
-
-                    DatabaseReference editThisUser = userSnapShot.getRef();
-                    editThisUser.setValue(u);
-                    *//*mCurrentSongRef = editThisUser.child("currentSong").child("timeStamp");
-                    mCurrentSongRef.setValue(currentPosition);*//*
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-
-
     //for all classes in menu, this makes the dropdown menu available
 
     @Override
