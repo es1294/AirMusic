@@ -1,6 +1,10 @@
 package com.example.es1294.airmusic;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,55 +16,138 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+import static com.example.es1294.airmusic.ListOfSongs.EXTRA_ID;
 
 
 public class feed extends AppCompatActivity {
+
+    private ArrayList<Friends> array = new ArrayList<>();
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    User u;
+    //Authentication
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser;
+    private String userID;
+
+    private int feedSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+
+        //find the current user
+        currentUser = mAuth.getCurrentUser();
+        userID = currentUser.getUid();
+
+        Query getUserNotEdited = mRootRef.child("User");
+        //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+        getUserNotEdited.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                    User u = userSnapShot.getValue(User.class);
+                    String fullName = u.getFullName();
+                    Friends f = new Friends(fullName);
+                    array.add(f);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         ListView list = findViewById(R.id.feed_view);
-        final ArrayList<Friends> array = new ArrayList<>();
-        Friends a = new Friends("Cloud", "Radioactive", "Imagine Dragons", "drawable://" + R.drawable.cloud);
-        Friends b = new Friends("Dovahkin", "Sovngarde", "Jermey Soule", "drawable://" + R.drawable.riften);
-        Friends c = new Friends("Lara Croft", "Cherry Bomb", "The Runaways", "drawable://" + R.drawable.shadow);
-        Friends d = new Friends("Thor ", "Immigrant Song", "Led Zeppelin", "drawable://" + R.drawable.godofhammers);
-        Friends e = new Friends("Iron man", "Highway to Hell", "AC/DC", "drawable://" + R.drawable.ironman);
-        Friends f = new Friends("Loki ", "Bitch Better Have My Money", "Rhianna", "drawable://" + R.drawable.lokiliesmith);
-        Friends g = new Friends("Daenerys", "Queen", "Janelle Monae", "drawable://" + R.drawable.motherofdragons);
-        Friends h = new Friends("Avatar Korra", "Turn It Down For What", "DJ Snake, Lil Jon", "drawable://" + R.drawable.avatarkorra);
-        Friends i = new Friends("Hella", "Chun - Li", "Nicki Minaj", "drawable://" + R.drawable.hella);
-        Friends j = new Friends("Terry Mcginnis", "Batman Beyond Theme", "Kristopher Carter", "drawable://" + R.drawable.terry);
-        Friends k = new Friends("Defenders", "We Will Rock You", "Queen", "drawable://" + R.drawable.defenders);
-
-        array.add(a);
-        array.add(b);
-        array.add(c);
-        array.add(d);
-        array.add(e);
-        array.add(f);
-        array.add(g);
-        array.add(h);
-        array.add(i);
-        array.add(j);
-        array.add(k);
-
-
         Feed_List_Adapter adapter = new Feed_List_Adapter(this, R.layout.adapter_view_layout, array);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("feed","onItemClick: array " + array.get(i).getName());
-                Toast.makeText(feed.this, "You clicked on: " + array.get(i).getName(), Toast.LENGTH_SHORT).show();
+                //Log.d("feed","onItemClick: array " + array.get(i).getName());
+                //Toast.makeText(feed.this, "You clicked on: " + array.get(i).getName(), Toast.LENGTH_SHORT).show();
+                String clickedUser = array.get(i).getName();
+                //Get the song the other user is listening to
+                Query getClickedUserSong = mRootRef.child("User").orderByChild("fullName").equalTo(clickedUser);
+                //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+                getClickedUserSong.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                            u = userSnapShot.getValue(User.class);
+                            feedSong = u.getCurrentSong();
+                            u.addListenRequest();
+                            //store the new user in the db
+                            DatabaseReference editThisUser = userSnapShot.getRef();
+                            editThisUser.setValue(u);
+                            if(feedSong == 0){
+                                Toast notListening = Toast.makeText(feed.this, "Nothing to listen to!", Toast.LENGTH_SHORT);
+                                notListening.show();
+                            }else {
+                                openMusicPlayer(feedSong);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                //Set the current user song to the clicked user
+               /* Query setCurrentSong = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+                //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+                setCurrentSong.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                            //get the current user object and fill the edittexts with its info
+                            u = userSnapShot.getValue(User.class);
+                            u.setCurrentSong(feedSong);
+                            DatabaseReference editThisUser = userSnapShot.getRef();
+                            editThisUser.setValue(u);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });*/
+
             }
         });
+
+    }
+
+    public void openMusicPlayer(int resID){
+
+        //musicPlayer.ma.finish();
+
+        Intent intent = new Intent(this, musicPlayer.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(EXTRA_ID, resID);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -110,4 +197,13 @@ public class feed extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+   /* private void collectData(Map<String, Object> users){
+        for(Map.Entry<String, Object> entry : users.entrySet()){
+
+            Map singleUser = (Map) entry.getValue();
+            Friends f = new Friends((String) singleUser.get("fullName"));
+            array.add(f);
+        }
+    }*/
 }

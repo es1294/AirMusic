@@ -115,7 +115,6 @@ public class profile extends AppCompatActivity {
         //Pull the user information from the database to auto-fill the fields
         //Write a query to get the user from the db
         Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
-        //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
         getUserNotEdited.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
