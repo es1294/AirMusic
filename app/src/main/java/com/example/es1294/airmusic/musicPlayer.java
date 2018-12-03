@@ -1,5 +1,6 @@
 package com.example.es1294.airmusic;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -63,6 +64,7 @@ public class musicPlayer extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //musicPlayer ma = this;
 
         //Find the currently logged in user
         currentUser = mAuth.getCurrentUser();
@@ -75,6 +77,20 @@ public class musicPlayer extends AppCompatActivity {
         resID = intent.getIntExtra(ListOfSongs.EXTRA_ID, 0);
         fields = Arrays.asList(R.raw.class.getFields());
         allSongIDs = new ArrayList<>();
+
+        Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+        getUserNotEdited.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mediaPlayer.seekTo(0);
+                mediaPlayer.start();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //if user decides to go straight to music page
         //without choosing a song from the list
@@ -196,7 +212,6 @@ public class musicPlayer extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        //Pull the user information from the database to auto-fill the fields
         //Write a query to get the user from the db
         Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
         //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
@@ -413,6 +428,27 @@ public class musicPlayer extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        resID = 0;
+        Query getUserNotEdited = mRootRef.child("User").orderByChild("authID").equalTo(userID);
+        //be sure to use SINGLE VALUE EVENT so that it ONLY reads the data ONCE
+        getUserNotEdited.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
+                    //get the current user object and fill the edittexts with its info
+                    u = userSnapShot.getValue(User.class);
+                    u.setCurrentSong(resID);
+                    //store the new user in the db
+                    DatabaseReference editThisUser = userSnapShot.getRef();
+                    editThisUser.setValue(u);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         stopPlaying();
     }
 

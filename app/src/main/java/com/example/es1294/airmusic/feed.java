@@ -82,8 +82,8 @@ public class feed extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("feed","onItemClick: array " + array.get(i).getName());
-                Toast.makeText(feed.this, "You clicked on: " + array.get(i).getName(), Toast.LENGTH_SHORT).show();
+                //Log.d("feed","onItemClick: array " + array.get(i).getName());
+                //Toast.makeText(feed.this, "You clicked on: " + array.get(i).getName(), Toast.LENGTH_SHORT).show();
                 String clickedUser = array.get(i).getName();
                 //Get the song the other user is listening to
                 Query getClickedUserSong = mRootRef.child("User").orderByChild("fullName").equalTo(clickedUser);
@@ -94,7 +94,16 @@ public class feed extends AppCompatActivity {
                         for(DataSnapshot userSnapShot: dataSnapshot.getChildren()){
                             u = userSnapShot.getValue(User.class);
                             feedSong = u.getCurrentSong();
-                            openMusicPlayer(feedSong);
+                            u.addListenRequest();
+                            //store the new user in the db
+                            DatabaseReference editThisUser = userSnapShot.getRef();
+                            editThisUser.setValue(u);
+                            if(feedSong == 0){
+                                Toast notListening = Toast.makeText(feed.this, "Nothing to listen to!", Toast.LENGTH_SHORT);
+                                notListening.show();
+                            }else {
+                                openMusicPlayer(feedSong);
+                            }
                         }
                     }
 
@@ -131,8 +140,11 @@ public class feed extends AppCompatActivity {
 
     public void openMusicPlayer(int resID){
 
+        //musicPlayer.ma.finish();
+
         Intent intent = new Intent(this, musicPlayer.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(EXTRA_ID, resID);
         startActivity(intent);
         finish();

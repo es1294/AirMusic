@@ -11,10 +11,11 @@ public class User {
     String Genre1, Genre2, Genre3;
     String profilePhotoStorageName;
     int currentSong;
+    int listenRequest;
 
     public User(){}
 
-    public User(String authID, String email, String Fullname, String About, String Artist1, String Artist2, String Artist3, String Artist4, String Artist5, String Genre1, String Genre2, String Genre3, String photoName, int currentSong){
+    public User(String authID, String email, String Fullname, String About, String Artist1, String Artist2, String Artist3, String Artist4, String Artist5, String Genre1, String Genre2, String Genre3, String photoName, int currentSong, int listenRequest){
         this.authID = authID;
         this.email = email;
         //this.password = password;
@@ -30,7 +31,7 @@ public class User {
         this.Genre3 = Genre3;
         this.profilePhotoStorageName = photoName;
         this.currentSong = currentSong;
-        //this.profilePhotoStorageName = profilePhotoStorageName;
+        this.listenRequest = listenRequest;
     }
 
 //getters and setters for each item
@@ -131,6 +132,16 @@ public class User {
     }
     public int getCurrentSong(){
         return this.currentSong;
+    }
+    //listenRequest
+    public void setListenRequest (int listenRequest){
+        this.listenRequest = listenRequest;
+    }
+    public int getListenRequest(){
+        return this.listenRequest;
+    }
+    public void addListenRequest(){
+        this.listenRequest = this.listenRequest + 1;
     }
 //end getters and setters
 }

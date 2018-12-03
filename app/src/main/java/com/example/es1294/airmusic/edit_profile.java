@@ -78,6 +78,7 @@ public class edit_profile extends AppCompatActivity {
     private String genreTwoString;
     private String genreThreeString;
     private int currentSong;
+    private int listenRequest;
 
     //Profile Photo Name
     private String profilePhotoName;
@@ -149,6 +150,7 @@ public class edit_profile extends AppCompatActivity {
 
                     profilePhotoName = u.getProfilePhotoStorageName();
                     currentSong = u.getCurrentSong();
+                    listenRequest = u.getListenRequest();
 
                 }
             }
@@ -235,6 +237,7 @@ public class edit_profile extends AppCompatActivity {
                                         user.setEmail(emailString);
                                         user.setProfilePhotoStorageName(profilePhotoName);
                                         user.setCurrentSong(currentSong);
+                                        user.setListenRequest(listenRequest);
 
                                         //store the new user in the db
                                         DatabaseReference editThisUser = userSnapShot.getRef();
@@ -292,6 +295,7 @@ public class edit_profile extends AppCompatActivity {
                                 user.setEmail(emailString);
                                 user.setProfilePhotoStorageName(profilePhotoName);
                                 user.setCurrentSong(currentSong);
+                                user.setListenRequest(listenRequest);
 
                                 //store the new user in the db
                                 DatabaseReference editThisUser = userSnapShot.getRef();

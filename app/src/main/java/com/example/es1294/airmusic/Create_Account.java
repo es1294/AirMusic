@@ -196,6 +196,7 @@ public class Create_Account extends Activity {
                                     defaultUser.setProfilePhotoStorageName("defaultphoto.png");
                                     int i = 0;
                                     defaultUser.setCurrentSong(i);
+                                    defaultUser.setListenRequest(0);
                                     mRootRef.child("User").push().setValue(defaultUser);
                                     openProfile();
 
