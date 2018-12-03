@@ -82,8 +82,10 @@ public class musicPlayer extends AppCompatActivity {
         getUserNotEdited.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mediaPlayer.seekTo(0);
-                mediaPlayer.start();
+                if(mediaPlayer != null){
+                    mediaPlayer.seekTo(0);
+                    mediaPlayer.start();
+                }
             }
 
             @Override
